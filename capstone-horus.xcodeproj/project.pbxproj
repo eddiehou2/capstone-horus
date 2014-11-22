@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6E0E85C41A212D73003057AB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C31A212D73003057AB /* main.m */; };
+		6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C61A212D73003057AB /* AppDelegate.m */; };
+		6E0E85CA1A212D73003057AB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C91A212D73003057AB /* ViewController.m */; };
+		6E0E85CD1A212D73003057AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E0E85CB1A212D73003057AB /* Main.storyboard */; };
+		6E0E85CF1A212D73003057AB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E0E85CE1A212D73003057AB /* Images.xcassets */; };
+		6E0E85D21A212D73003057AB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E0E85D01A212D73003057AB /* LaunchScreen.xib */; };
+		6E0E85DE1A212D74003057AB /* capstone_horusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85DD1A212D74003057AB /* capstone_horusTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6E0E85D81A212D74003057AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6E0E85B61A212D73003057AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6E0E85BD1A212D73003057AB;
+			remoteInfo = "capstone-horus";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6E0E85BE1A212D73003057AB /* capstone-horus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "capstone-horus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E0E85C21A212D73003057AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6E0E85C31A212D73003057AB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6E0E85C51A212D73003057AB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6E0E85C61A212D73003057AB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6E0E85C81A212D73003057AB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		6E0E85C91A212D73003057AB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		6E0E85CC1A212D73003057AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6E0E85CE1A212D73003057AB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6E0E85D11A212D73003057AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		6E0E85D71A212D74003057AB /* capstone-horusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "capstone-horusTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E0E85DC1A212D74003057AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6E0E85DD1A212D74003057AB /* capstone_horusTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = capstone_horusTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6E0E85BB1A212D73003057AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6E0E85D41A212D74003057AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6E0E85B51A212D73003057AB = {
+			isa = PBXGroup;
+			children = (
+				6E0E85C01A212D73003057AB /* capstone-horus */,
+				6E0E85DA1A212D74003057AB /* capstone-horusTests */,
+				6E0E85BF1A212D73003057AB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6E0E85BF1A212D73003057AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6E0E85BE1A212D73003057AB /* capstone-horus.app */,
+				6E0E85D71A212D74003057AB /* capstone-horusTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6E0E85C01A212D73003057AB /* capstone-horus */ = {
+			isa = PBXGroup;
+			children = (
+				6E0E85C51A212D73003057AB /* AppDelegate.h */,
+				6E0E85C61A212D73003057AB /* AppDelegate.m */,
+				6E0E85C81A212D73003057AB /* ViewController.h */,
+				6E0E85C91A212D73003057AB /* ViewController.m */,
+				6E0E85CB1A212D73003057AB /* Main.storyboard */,
+				6E0E85CE1A212D73003057AB /* Images.xcassets */,
+				6E0E85D01A212D73003057AB /* LaunchScreen.xib */,
+				6E0E85C11A212D73003057AB /* Supporting Files */,
+			);
+			path = "capstone-horus";
+			sourceTree = "<group>";
+		};
+		6E0E85C11A212D73003057AB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6E0E85C21A212D73003057AB /* Info.plist */,
+				6E0E85C31A212D73003057AB /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6E0E85DA1A212D74003057AB /* capstone-horusTests */ = {
+			isa = PBXGroup;
+			children = (
+				6E0E85DD1A212D74003057AB /* capstone_horusTests.m */,
+				6E0E85DB1A212D74003057AB /* Supporting Files */,
+			);
+			path = "capstone-horusTests";
+			sourceTree = "<group>";
+		};
+		6E0E85DB1A212D74003057AB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6E0E85DC1A212D74003057AB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6E0E85BD1A212D73003057AB /* capstone-horus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E0E85E11A212D74003057AB /* Build configuration list for PBXNativeTarget "capstone-horus" */;
+			buildPhases = (
+				6E0E85BA1A212D73003057AB /* Sources */,
+				6E0E85BB1A212D73003057AB /* Frameworks */,
+				6E0E85BC1A212D73003057AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "capstone-horus";
+			productName = "capstone-horus";
+			productReference = 6E0E85BE1A212D73003057AB /* capstone-horus.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6E0E85D61A212D74003057AB /* capstone-horusTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E0E85E41A212D74003057AB /* Build configuration list for PBXNativeTarget "capstone-horusTests" */;
+			buildPhases = (
+				6E0E85D31A212D74003057AB /* Sources */,
+				6E0E85D41A212D74003057AB /* Frameworks */,
+				6E0E85D51A212D74003057AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6E0E85D91A212D74003057AB /* PBXTargetDependency */,
+			);
+			name = "capstone-horusTests";
+			productName = "capstone-horusTests";
+			productReference = 6E0E85D71A212D74003057AB /* capstone-horusTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6E0E85B61A212D73003057AB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Eddie Hou";
+				TargetAttributes = {
+					6E0E85BD1A212D73003057AB = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					6E0E85D61A212D74003057AB = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 6E0E85BD1A212D73003057AB;
+					};
+				};
+			};
+			buildConfigurationList = 6E0E85B91A212D73003057AB /* Build configuration list for PBXProject "capstone-horus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6E0E85B51A212D73003057AB;
+			productRefGroup = 6E0E85BF1A212D73003057AB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6E0E85BD1A212D73003057AB /* capstone-horus */,
+				6E0E85D61A212D74003057AB /* capstone-horusTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6E0E85BC1A212D73003057AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E0E85CD1A212D73003057AB /* Main.storyboard in Resources */,
+				6E0E85D21A212D73003057AB /* LaunchScreen.xib in Resources */,
+				6E0E85CF1A212D73003057AB /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6E0E85D51A212D74003057AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6E0E85BA1A212D73003057AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E0E85CA1A212D73003057AB /* ViewController.m in Sources */,
+				6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */,
+				6E0E85C41A212D73003057AB /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6E0E85D31A212D74003057AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E0E85DE1A212D74003057AB /* capstone_horusTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6E0E85D91A212D74003057AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6E0E85BD1A212D73003057AB /* capstone-horus */;
+			targetProxy = 6E0E85D81A212D74003057AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6E0E85CB1A212D73003057AB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6E0E85CC1A212D73003057AB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6E0E85D01A212D73003057AB /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6E0E85D11A212D73003057AB /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6E0E85DF1A212D74003057AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		6E0E85E01A212D74003057AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6E0E85E21A212D74003057AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "capstone-horus/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6E0E85E31A212D74003057AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "capstone-horus/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		6E0E85E51A212D74003057AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "capstone-horusTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/capstone-horus.app/capstone-horus";
+			};
+			name = Debug;
+		};
+		6E0E85E61A212D74003057AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "capstone-horusTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/capstone-horus.app/capstone-horus";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6E0E85B91A212D73003057AB /* Build configuration list for PBXProject "capstone-horus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E0E85DF1A212D74003057AB /* Debug */,
+				6E0E85E01A212D74003057AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6E0E85E11A212D74003057AB /* Build configuration list for PBXNativeTarget "capstone-horus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E0E85E21A212D74003057AB /* Debug */,
+				6E0E85E31A212D74003057AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6E0E85E41A212D74003057AB /* Build configuration list for PBXNativeTarget "capstone-horusTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E0E85E51A212D74003057AB /* Debug */,
+				6E0E85E61A212D74003057AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6E0E85B61A212D73003057AB /* Project object */;
+}
