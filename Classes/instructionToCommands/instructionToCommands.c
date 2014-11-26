@@ -13,7 +13,7 @@
 
 #define INSTRUCTION_SIZE 	4
 #define SPEED 				32		//Half speed
-#define INTERVAL_15			200		//It is assumed that it takes 200 milliseconds
+#define INTERVAL_15			200		//It is assumed that it takes 200 milliseconds to turn 15 degrees
 #define XMAX				1000 	
 #define YMAX				1000
 
@@ -27,6 +27,15 @@
 //	3) To add a blank set of instructions to write END0 to, for instruction parsing
 #define MAX_COMMANDS		(int)((round(sqrt(pow(XMAX, 2.0) + pow(YMAX, 2.0))) / 1000.0) + 3.0)			
 
+/* Given starting coordinates and orientation, along with destination coordinates, find required turning angle
+ * @startX	The starting position X coordinate. Increases as position moves towards the right.
+ * @startY	The starting position Y coordinate. Increases as position moves downwards.
+ * @endX	The destination X coordinate.
+ * @endY	The destination Y coordinate.
+ * @degree	The orientation of the vehicle at starting position. Range 0-359, with 0 as straight up and incrementing clockwise.
+ *
+ * Returns:	Integer value of angle between a vector denoting current facing and a vector that passes through destination point.
+ */
 int calculateTurn(int startX, int startY, int endX, int endY, int degree)
 {
 	double angle = 0; //Angle from origin to destination
@@ -39,21 +48,21 @@ int calculateTurn(int startX, int startY, int endX, int endY, int degree)
 	//No movement
 	if (0 == dX && 0 == dY) angle = 0;
 	//Straight up
-	else if (0 == dX && 0 < dY) angle = 0;
+	else if (0 == dX && 0 > dY) angle = 0;
 	//First quadrant
-	else if (0 < dX && 0 < dY) angle = atan(dX/dY) * 180.0 / M_PI;
+	else if (0 < dX && 0 > dY) angle = atan(dX/dY) * 180.0 / M_PI;
 	//To the right
 	else if (0 < dX && 0 == dY) angle = 89;
 	//Second quadrant
-	else if (0 < dX && 0 > dY) angle = 89 + atan(dY/dX) * 180.0 / M_PI;
+	else if (0 < dX && 0 < dY) angle = 89 + atan(dY/dX) * 180.0 / M_PI;
 	//Straight down
-	else if (0 == dX && 0 > dY) angle = 179;
+	else if (0 == dX && 0 < dY) angle = 179;
 	//Third quadrant
-	else if (0 > dX && 0 > dY) angle = 179 + atan(dX/dY) * 180.0 / M_PI;
+	else if (0 > dX && 0 < dY) angle = 179 + atan(dX/dY) * 180.0 / M_PI;
 	//To the left
 	else if (0 > dX && 0 == dY) angle = 269;
 	//Fourth quadrant
-	else if (0 > dX && 0 < dY) angle = 269 + atan(dY/dX) * 180.0 / M_PI;
+	else if (0 > dX && 0 > dY) angle = 269 + atan(dY/dX) * 180.0 / M_PI;
 	
 	//Convert destination angle back to int
 	int destAngle = round(angle);
@@ -67,6 +76,14 @@ int calculateTurn(int startX, int startY, int endX, int endY, int degree)
 	return turnAngle;
 }
 
+/* Calculate distance given starting and end coordinates
+ * @startX	The starting position X coordinate. Increases as position moves towards the right.
+ * @startY	The starting position Y coordinate. Increases as position moves downwards.
+ * @endX	The destination X coordinate.
+ * @endY	The destination Y coordinate.
+ *
+ * Returns:	Integer value of distance between two points.
+ */
 int calculateDist(int startX, int startY, int endX, int endY)
 {
 	double dX = abs(endX - startX); //Displacement
@@ -75,6 +92,16 @@ int calculateDist(int startX, int startY, int endX, int endY)
 	return round(sqrt(pow(dX, 2.0) + pow(dY, 2.0)));
 }
 
+/* Given starting coordinates and orientation, along with destination coordinates, find required turning angle
+ * @startX		The starting position X coordinate. Increases as position moves towards the right.
+ * @startY		The starting position Y coordinate. Increases as position moves downwards.
+ * @endX		The destination X coordinate.
+ * @endY		The destination Y coordinate.
+ * @degree		The orientation of the vehicle at starting position. Range 0-359, with 0 as straight up and incrementing clockwise.
+ * @commands	Pointer in which a 2-D array of strings is to be constructed and assigned. These are the commands meant for hardware.
+ *
+ * Returns:		True if conversion is successful, false otherwise.
+ */
 bool instructionToCommands(int startX, int startY, int degree, int endX, int endY, char**** commands)
 {
 	printf("Entered instuctionToCommands! Parameters are:\n");
@@ -125,7 +152,6 @@ bool instructionToCommands(int startX, int startY, int degree, int endX, int end
 	{
         printf("%d\n", i);
         printf("%d\n", trueDist/9999);
-		//printf("%s\n", (*commands)[0][0]);
         //This is for the last loop
         //In the case that trueDist > 9999, the remainder is held in this series of instructions
         //For this case, the distance will always be < 9999
