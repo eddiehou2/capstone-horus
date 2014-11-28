@@ -29,7 +29,7 @@
     
     //At this point, self.gridWidth and self.gridHeight are set to the values the user has inputted
     NSLog(@"width: %d - height: %d", self.gridWidth, self.gridHeight);
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,7 +47,7 @@
     CGFloat pixelsPerPointY = screenHeight/self.gridHeight;
     CGFloat pointX = location.x/ pixelsPerPointX;
     CGFloat pointY = location.y/ pixelsPerPointY;
-
+    
     NSLog(@"x-coordinate: %.3f\n", pointX);
     NSLog(@"y-coordinate: %.3f\n", pointY);
     
@@ -56,13 +56,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
+
