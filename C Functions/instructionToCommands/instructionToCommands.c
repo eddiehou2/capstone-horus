@@ -90,7 +90,10 @@ bool instructionToCommands(int startX, int startY, int degree, int endX, int end
 	if (turningAngle > 0) direction = 1;
 	turningAngle = abs(turningAngle);
 	
+	//Calculate how long the turning phase lasts
 	int time = round((turningAngle/15) * INTERVAL_15);
+	if (10 > time) time = 10;
+	
 	//Add instruction: Turn sensitivity MAX, speed 32, time milliseconds
 	if (1 == direction) strcpy((*commands)[0][0], "813f");		//Right turn
 	else strcpy((*commands)[0][0], "8140");						//Left turn
@@ -102,27 +105,15 @@ bool instructionToCommands(int startX, int startY, int degree, int endX, int end
 	printf("Distance = %d\n", distance);
 	
 	//Add instruction: Turn sensitivity 0, SPEED, distance*10 milliseconds
+	//We're assuming here that it takes 10 milliseconds to travel 1 unit (it probably doesn't)
 	int trueDist = distance*10;
 
-	int i;
-	for (i = 1; i <= trueDist/9999 + 1; i++)	//The +1 is for the spillover case
-	{
-        //This is for the last loop
-        //In the case that trueDist > 9999, the remainder is held in this series of instructions
-        //For this case, the distance will always be < 9999
-		if (trueDist/9999 + 1 == i)
-		{
-			strcpy((*commands)[i][0], "8100");
-			strcpy((*commands)[i][1], "821f");
-			sprintf((*commands)[i][2], "%d", trueDist % 9999);
-		}
-        else
-		{
-		    strcpy((*commands)[i][0], "8100");
-		    strcpy((*commands)[i][1], "821f");
-		    strcpy((*commands)[i][2], "9999");
-        }
-	}
+	//This shouldn't happen (and thus we'd probably need to recalibrate the speed, as its taking >10 seconds for one movement command)
+	if (9999 < trueDist) trueDist = 9000;
+	
+	strcpy((*commands)[1][0], "8100");
+	strcpy((*commands)[1][1], "821f");
+	sprintf((*commands)[1][2], "%d", trueDist % 9999);
 	
 	if (NULL != (*commands)) result = true;
 	
