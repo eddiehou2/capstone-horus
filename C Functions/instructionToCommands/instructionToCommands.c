@@ -95,9 +95,9 @@ bool instructionToCommands(int startX, int startY, int degree, int endX, int end
 	if (10 > time) time = 10;
 	
 	//Add instruction: Turn sensitivity MAX, speed 32, time milliseconds
-	if (1 == direction) strcpy((*commands)[0][0], "813f");		//Right turn
-	else strcpy((*commands)[0][0], "8140");						//Left turn
-	strcpy((*commands)[0][1], "821f");
+	if (1 == direction) strcpy((*commands)[0][0], "81 3f");		//Right turn
+	else strcpy((*commands)[0][0], "81 40");						//Left turn
+	strcpy((*commands)[0][1], "82 1f");
 	sprintf((*commands)[0][2], "%d", time);
 	
 //Linear Phase
@@ -111,8 +111,8 @@ bool instructionToCommands(int startX, int startY, int degree, int endX, int end
 	//This shouldn't happen (and thus we'd probably need to recalibrate the speed, as its taking >10 seconds for one movement command)
 	if (9999 < trueDist) trueDist = 9000;
 	
-	strcpy((*commands)[1][0], "8100");
-	strcpy((*commands)[1][1], "821f");
+	strcpy((*commands)[1][0], "81 00");
+	strcpy((*commands)[1][1], "82 1f");
 	sprintf((*commands)[1][2], "%d", trueDist % 9999);
 	
 	if (NULL != (*commands)) result = true;

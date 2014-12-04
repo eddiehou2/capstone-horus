@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define INSTRUCTION_SIZE 	4
+#define INSTRUCTION_SIZE 	5
 #define SPEED 				32		//Half speed
 #define INTERVAL_15			200		//It is assumed that it takes 200 milliseconds to turn 15 degrees
 #define XMAX				1000 	
