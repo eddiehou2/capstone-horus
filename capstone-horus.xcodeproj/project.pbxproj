@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		187844911A2839D800D48CF5 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187844901A2839D800D48CF5 /* GridView.m */; };
-		187844941A283A8D00D48CF5 /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187844931A283A8D00D48CF5 /* GridViewController.m */; };
+		18D3152E1A586598003E2253 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D3152B1A586598003E2253 /* GridView.m */; };
+		18D3152F1A586598003E2253 /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D3152D1A586598003E2253 /* GridViewController.m */; };
 		6E0E85C41A212D73003057AB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C31A212D73003057AB /* main.m */; };
 		6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C61A212D73003057AB /* AppDelegate.m */; };
 		6E0E85CA1A212D73003057AB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C91A212D73003057AB /* ViewController.m */; };
@@ -29,10 +29,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1878448F1A2839D800D48CF5 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
-		187844901A2839D800D48CF5 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
-		187844921A283A8D00D48CF5 /* GridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
-		187844931A283A8D00D48CF5 /* GridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridViewController.m; sourceTree = "<group>"; };
+		18D3152A1A586598003E2253 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridView.h; path = ../../grid2/grid2/GridView.h; sourceTree = "<group>"; };
+		18D3152B1A586598003E2253 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridView.m; path = ../../grid2/grid2/GridView.m; sourceTree = "<group>"; };
+		18D3152C1A586598003E2253 /* GridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridViewController.h; path = ../../grid2/grid2/GridViewController.h; sourceTree = "<group>"; };
+		18D3152D1A586598003E2253 /* GridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridViewController.m; path = ../../grid2/grid2/GridViewController.m; sourceTree = "<group>"; };
 		6E0E85BE1A212D73003057AB /* capstone-horus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "capstone-horus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E85C21A212D73003057AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E0E85C31A212D73003057AB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -89,12 +89,12 @@
 			children = (
 				6E0E85C51A212D73003057AB /* AppDelegate.h */,
 				6E0E85C61A212D73003057AB /* AppDelegate.m */,
-				1878448F1A2839D800D48CF5 /* GridView.h */,
-				187844921A283A8D00D48CF5 /* GridViewController.h */,
-				187844931A283A8D00D48CF5 /* GridViewController.m */,
-				187844901A2839D800D48CF5 /* GridView.m */,
 				6E0E85C81A212D73003057AB /* ViewController.h */,
 				6E0E85C91A212D73003057AB /* ViewController.m */,
+				18D3152A1A586598003E2253 /* GridView.h */,
+				18D3152B1A586598003E2253 /* GridView.m */,
+				18D3152C1A586598003E2253 /* GridViewController.h */,
+				18D3152D1A586598003E2253 /* GridViewController.m */,
 				6E0E85CB1A212D73003057AB /* Main.storyboard */,
 				6E0E85CE1A212D73003057AB /* Images.xcassets */,
 				6E0E85D01A212D73003057AB /* LaunchScreen.xib */,
@@ -231,8 +231,8 @@
 			files = (
 				6E0E85CA1A212D73003057AB /* ViewController.m in Sources */,
 				6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */,
-				187844941A283A8D00D48CF5 /* GridViewController.m in Sources */,
-				187844911A2839D800D48CF5 /* GridView.m in Sources */,
+				18D3152F1A586598003E2253 /* GridViewController.m in Sources */,
+				18D3152E1A586598003E2253 /* GridView.m in Sources */,
 				6E0E85C41A212D73003057AB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
