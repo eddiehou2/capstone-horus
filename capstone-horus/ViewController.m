@@ -9,7 +9,7 @@
 #import "ViewController.h"
 @import ExternalAccessory;
 
-@interface ViewController ()
+@interface ViewController () <EAAccessoryDelegate,NSStreamDelegate>
 
 @end
 
@@ -79,13 +79,13 @@ static NSMutableDictionary * microcarCommands = nil;
     
     // Converting Hex to ASCII
     NSLog(@"Commencing Sequence: %@", self.sendIntermediate);
-    int place = 1;
+    int place = 0;
     NSArray * components = [self.sendIntermediate componentsSeparatedByString:@" "];
     for ( NSString * component in components ) {
         int value = 0;
         sscanf([component cStringUsingEncoding:NSASCIIStringEncoding], "%x", &value);
         self.byteData[place] = (Byte) value;
-        place --;
+        place ++;
     }
     NSLog(@"ASCII Equivalent: %s", self.byteData);
     
@@ -134,6 +134,7 @@ static NSMutableDictionary * microcarCommands = nil;
     for (EAAccessory *accessory in self.deviceList) {
         if ([[accessory name] isEqual:@"MicroCar-20"]){
             self.microCar = accessory;
+            NSLog(@"I SET IT UP!");
             [self.microCar setDelegate:self];
             self.session = [[EASession alloc] initWithAccessory:self.microCar forProtocol: [[self.microCar protocolStrings] objectAtIndex:0]];
         }

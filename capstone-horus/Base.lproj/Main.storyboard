@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,8 +16,84 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Iwq-Kr-eDi">
+                                <rect key="frame" x="104" y="376" width="472" height="31"/>
+                                <connections>
+                                    <action selector="changedSteerSlider:" destination="vXZ-lx-hvc" eventType="valueChanged" id="iJB-bw-7ju"/>
+                                    <action selector="releasedSteerSlider:" destination="vXZ-lx-hvc" eventType="touchUpOutside" id="9Gp-U6-Cd5"/>
+                                    <action selector="releasedSteerSlider:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dnp-1V-L5F"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uaq-if-OUJ">
+                                <rect key="frame" x="46" y="380" width="50" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="ZKS-Hc-kWs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAJ-jB-lA0">
+                                <rect key="frame" x="46" y="430" width="50" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="JYg-8B-44b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device Info:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJT-DB-hve">
+                                <rect key="frame" x="26" y="50" width="548" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="ji7-9U-Uam"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="css-cw-X41">
+                                <rect key="frame" x="277" y="486" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="movePlease:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="6Zt-Pr-yvm"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="6HQ-yJ-QAZ">
+                                <rect key="frame" x="104" y="426" width="472" height="31"/>
+                                <connections>
+                                    <action selector="changedSpeedSlider:" destination="vXZ-lx-hvc" eventType="valueChanged" id="w0e-t6-Sh5"/>
+                                    <action selector="releasedSpeedSlider:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TqA-yr-Ljg"/>
+                                    <action selector="releasedSpeedSlider:" destination="vXZ-lx-hvc" eventType="touchUpOutside" id="Y2S-Ow-uLk"/>
+                                </connections>
+                            </slider>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6HQ-yJ-QAZ" firstAttribute="top" secondItem="Iwq-Kr-eDi" secondAttribute="bottom" constant="20" id="2Bm-ho-B1t"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Iwq-Kr-eDi" secondAttribute="trailing" constant="10" id="3t0-1E-Z06"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eJT-DB-hve" secondAttribute="trailing" constant="10" id="6a3-us-XCU"/>
+                            <constraint firstItem="oAJ-jB-lA0" firstAttribute="top" secondItem="Uaq-if-OUJ" secondAttribute="bottom" constant="30" id="HVC-0g-sdu"/>
+                            <constraint firstItem="Iwq-Kr-eDi" firstAttribute="top" secondItem="eJT-DB-hve" secondAttribute="bottom" constant="26" id="IKy-q6-BFr"/>
+                            <constraint firstItem="Uaq-if-OUJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="30" id="Lji-UW-arM"/>
+                            <constraint firstItem="Iwq-Kr-eDi" firstAttribute="leading" secondItem="Uaq-if-OUJ" secondAttribute="trailing" constant="10" id="P63-NG-8x9"/>
+                            <constraint firstItem="eJT-DB-hve" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="30" id="YWC-dN-kCF"/>
+                            <constraint firstAttribute="centerX" secondItem="css-cw-X41" secondAttribute="centerX" id="hoI-WP-eGw"/>
+                            <constraint firstItem="Uaq-if-OUJ" firstAttribute="top" secondItem="eJT-DB-hve" secondAttribute="bottom" constant="30" id="ij0-zq-Mwg"/>
+                            <constraint firstItem="eJT-DB-hve" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="liJ-45-OQh"/>
+                            <constraint firstItem="css-cw-X41" firstAttribute="top" secondItem="6HQ-yJ-QAZ" secondAttribute="bottom" constant="30" id="pIN-nI-519"/>
+                            <constraint firstItem="oAJ-jB-lA0" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="30" id="reM-zb-Fgi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6HQ-yJ-QAZ" secondAttribute="trailing" constant="10" id="xwB-9X-Hzy"/>
+                            <constraint firstItem="6HQ-yJ-QAZ" firstAttribute="leading" secondItem="oAJ-jB-lA0" secondAttribute="trailing" constant="10" id="xyk-EG-ij5"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="deviceListLabel" destination="eJT-DB-hve" id="qus-Yi-Oar"/>
+                        <outlet property="speedSlider" destination="6HQ-yJ-QAZ" id="Gxu-dk-d2g"/>
+                        <outlet property="steerSlider" destination="Iwq-Kr-eDi" id="AqZ-Vb-5XS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
