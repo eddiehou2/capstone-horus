@@ -36,9 +36,13 @@ static NSMutableDictionary * microcarCommands = nil;
 }
 
 - (IBAction)movePlease:(id)sender {
+    int speedIndex = 10;
+    int steerIndex = 10;
+    float sleepTime = 2.0f;
+    
     NSLog(@"Command: move_Please");
-    self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_FRONT"][10],microcarCommands[@"STEER_RIGHT"][10]];
-    [NSThread sleepForTimeInterval:2.0f];
+    self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_FRONT"][speedIndex],microcarCommands[@"STEER_RIGHT"][steerIndex]];
+    [NSThread sleepForTimeInterval:sleepTime];
     
     self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
 }
