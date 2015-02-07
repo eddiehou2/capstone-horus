@@ -16,6 +16,11 @@
 @implementation ViewController {
     BOOL isAvailable;
 }
+
+@synthesize inputStream;
+@synthesize ipAddress;
+@synthesize portNumber;
+
 static NSMutableDictionary * microcarCommands = nil;
 
 - (void)viewDidLoad {
@@ -25,9 +30,25 @@ static NSMutableDictionary * microcarCommands = nil;
     [self initStreams]; // Initializes and opens output and input streams
     [self initGestures];
     [self initStreamThread];
+    [self initHelperThread];
     
     isAvailable = false;
     // Do any additional setup after loading the view, typically from a nib.
+    
+    self.movementBit = 0;
+    self.reverseBit = 1;
+    
+    self.aX = 0.0f;
+    self.aY = 0.0f;
+    self.bX = 0.0f;
+    self.bY = 0.0f;
+    self.currentX = 0.0f;
+    self.currentY = 0.0f;
+    
+    
+    //At this point, self.ipAddress and self.portNumber are set to the values the user has inputted
+    [self tLog:[NSString stringWithFormat:@"At View Controller: Connecting to IP Address: %@, Port Number: %d", self.ipAddress, self.portNumber]];
+    [self initNetworkCommunication];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,13 +56,81 @@ static NSMutableDictionary * microcarCommands = nil;
     // Dispose of any resources that can be recreated.
 }
 
+//speed = 16, steer = 63, time = 1.8, radius = 6.3cm
+//speed = 16, steer = 48, time = 1.8, radius = 6.3cm
+//speed = 16, steer = 32, time = 2.0, radius = 7.5cm
+//speed = 16, steer = 16, time = 3.6, radius = 13.9cm
+//speed = 16, steer = 12, time = 5.0, radius = 16.8cm
+//speed = 16, steer = 8, time = 8.0, radius = 26.75cm
+//speed = 16, steer = 6, time = 12.0, radius = 42.8cm
+//speed = 16, steer = 4, time = 18.0, radius = 61.9cm
+
+//speed = 32, steer = 63, time = 1.0, radius = 8.2cm
+//speed = 32, steer = 48, time = 1.0, radius = 8.6cm
+//speed = 32, steer = 32, time = 1.1, radius = 8.9cm
+//speed = 32, steer = 16, time = 1.8, radius = 13.6cm
+//speed = 32, steer = 12, time = 2.4, radius = 16.8cm
+//speed = 32, steer = 8, time = 3.6, radius = 5.0cm
+//speed = 32, steer = 6, time = 6.0, radius = 41.0cm
+//speed = 32, steer = 4, time = 9.0, radius = 62.4cm
+
 - (IBAction)movePlease:(id)sender {
-    int speedIndex = 10;
-    int steerIndex = 10;
-    float sleepTime = 2.0f;
+    self.movementBit = 1;
+}
+
+- (void)moveCycle {
+    int speedIndex;
+    int steerIndex;
+    float sleepTime;
+    
+    int xDirection = 0;
+    int yDirection = 20;
+    
+    if (self.reverseBit == -1) {
+        yDirection = -20;
+    }
+    
+    if (self.reverseBit == 1 && self.bX != 0.0f) {
+        xDirection = self.bX - self.currentX;
+    } else if (self.reverseBit == 1 && self.bY != 0.0f) {
+        yDirection = self.bY - self.currentY;
+    } else if (self.reverseBit == -1 && self.aX != 0.0f) {
+        xDirection = self.aX - self.currentX;
+    } else if (self.reverseBit == -1 && self.aY != 0.0f) {
+        yDirection = self.aY - self.currentY;
+    }
+    
+    NSLog(@"xDirection is: %d" ,xDirection);
+    NSLog(@"yDirection is: %d" ,yDirection);
+    
+    NSMutableDictionary * commands = [self generateCommandsWithDeltaX:xDirection deltaY:yDirection];
+    
+    speedIndex = [commands[@"SPEED_INDEX"] intValue];
+    steerIndex = [commands[@"STEER_INDEX"] intValue];
+    sleepTime = [commands[@"SLEEP_TIME"] floatValue];
     
     NSLog(@"Command: move_Please");
-    self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_FRONT"][speedIndex],microcarCommands[@"STEER_RIGHT"][steerIndex]];
+    
+    NSString * frontOrBack = @"SPEED_FRONT";
+    NSString * leftOrRight = @"STEER_RIGHT";
+    
+    if (speedIndex < 0) {
+        speedIndex *= -1;
+        frontOrBack = @"SPEED_BACK";
+    }
+    if (steerIndex < -2) {
+        steerIndex += 3; //For calibration purposes, as the car leans towards the left
+        steerIndex *= -1;
+        leftOrRight = @"STEER_LEFT";
+    } else if (steerIndex == -2 || steerIndex == 1) steerIndex = 0;
+    
+    if (self.reverseBit == -1) {
+        leftOrRight = @"STEER_LEFT";
+        steerIndex += 1; //Also for calibration purposes
+    }
+    
+    self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[frontOrBack][speedIndex],microcarCommands[leftOrRight][steerIndex]];
+    
     [NSThread sleepForTimeInterval:sleepTime];
     
     self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
@@ -107,7 +196,7 @@ static NSMutableDictionary * microcarCommands = nil;
         {
             NSLog(@"write error");
         }
-        else if (bytesWritten >0)
+        else if (bytesWritten > 0)
         {
             // NSLog(@"Bytes Written: %ld", (long)bytesWritten);
             self.byteLen = self.byteLen - bytesWritten;
@@ -182,15 +271,158 @@ static NSMutableDictionary * microcarCommands = nil;
     [streamThread start];
 }
 
--(void)streamThreadMain {
+-(void) streamThreadMain {
     // Check whether current thread is externally terminated or not.
-    while([[NSThread currentThread] isCancelled] == NO)
-    {
-        if (self.sendIntermediate != nil){
+    while([[NSThread currentThread] isCancelled] == NO) {
+        if (self.sendIntermediate != nil) {
             [self initMoveSequence];
         }
         [NSThread sleepForTimeInterval:0.1f];
     }
+}
+
+-(void) initHelperThread {
+    NSThread *helperThread = [[NSThread alloc] initWithTarget:self selector:@selector(helperThreadMain) object:nil];
+    [helperThread start];
+}
+
+-(void) helperThreadMain {
+    while([[NSThread currentThread] isCancelled] == NO) {
+        if (self.movementBit == 1) {
+            self.sendIntermediate = microcarCommands[@"HORN_ON"];
+            
+            int cycles = 10;
+            
+            for (int i = 0; i < cycles; i++) {
+                [NSThread sleepForTimeInterval:6.0f];
+                
+                if (self.soundArrayString != nil) {
+                    if (i == 0) {
+                        NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                        self.aX = [components[1] floatValue];
+                        self.aY = [components[2] floatValue];
+                    } else if (i == 1) {
+                        NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                        self.bX = [components[1] floatValue];
+                        self.bY = [components[2] floatValue];
+                    } else {
+                        NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                        self.currentX = [components[1] floatValue];
+                        self.currentY = [components[2] floatValue];
+                    }
+                }
+                [self moveCycle];
+                self.reverseBit*=-1;
+            }
+            
+            self.movementBit = 0;
+        }
+    }
+}
+
+-(NSMutableDictionary *) generateCommandsWithDeltaX:(float)deltaX deltaY:(float)deltaY {
+    //Return values needed to add to array
+    int steerIndex = 0;
+    int speedIndex = 16; //Fixed for now, speed only modifies controlability, turn sharpness is mostly governed by the steerIndex
+    float sleepTime = 0.0f;
+    
+    //Movement flags
+    int rightTurnFlag = 1;
+    int forwardFlag = 1;
+    
+    //Find distance to destination
+    float displacement = sqrtf(powf(deltaX, 2) + powf(deltaY, 2));
+    
+    //Calculate the turning angle
+    float turningAngle = 0.0;
+    
+    //No movement
+    if (0 == deltaX && 0 == deltaY) turningAngle = 0;
+    //Forward
+    else if (0 == deltaX && 0 < deltaY) turningAngle = 0;
+    //Turn Right
+    else if (0 < deltaX && 0 < deltaY) turningAngle = atanf(fabsf(deltaX)/fabsf(deltaY)) * 180.0 / M_PI;
+    //Sharp Right
+    else if (0 < deltaX && 0 == deltaY) turningAngle = 89;
+    //Turn Left
+    else if (0 > deltaX && 0 < deltaY) {
+        turningAngle = (atanf(fabsf(deltaX)/fabsf(deltaY)) * 180.0 / M_PI);
+        rightTurnFlag = 0;
+    }
+    //Sharp Left
+    else if (0 > deltaX && 0 == deltaY) {
+        turningAngle = 89;
+        rightTurnFlag = 0;
+    }
+    //Backwards
+    else if (0 == deltaX && 0 > deltaY) {
+        turningAngle = 0;
+        forwardFlag = 0;
+    }
+    //Backwards Right
+    else if (0 < deltaX && 0 > deltaY) {
+        turningAngle = (atanf(fabsf(deltaX)/fabsf(deltaY)) * 180.0 / M_PI);
+        forwardFlag = 0;
+    }
+    //Backwards Left
+    else if (0 > deltaX && 0 > deltaY) {
+        turningAngle = (atanf(fabsf(deltaX)/fabsf(deltaY)) * 180.0 / M_PI);
+        forwardFlag = 0;
+        rightTurnFlag = 0;
+    }
+    
+    NSLog(@"Turning Angle is: %f", turningAngle);
+    
+    //Calculate radius of curvature
+    
+    float radius = 0.0;
+    int closeEnough = 1;
+    
+    while (closeEnough) {
+        if (fabsf((sqrtf(powf((deltaX - radius), 2) + powf((deltaY - 0), 2))) - radius) < 1.0) {
+            closeEnough = 0;
+        }
+        radius = radius+0.4;
+    }
+    
+    //Calculate steerIndex
+    if (radius > 80.0) {
+        NSLog(@"No steering: Radius of curvature is too large!");
+        steerIndex = 0.0;
+    }
+    else {
+        NSLog(@"The radius of curvature is: %f", radius);
+        steerIndex = (int)(roundf(160/(radius - 4)));
+        NSLog(@"The steerIndex is: %d", steerIndex);
+    }
+    
+    //Calculate sleepTime
+    //First calculate theta -> the 'slice' of the semicircle the car travels
+    if (steerIndex > 0.0) {
+        float fractionOfCircle = ((360.0/M_PI) * asinf((displacement/2)/radius))/(180.0);
+        
+        //It takes radius/3.4 to for the car to travel 1 semicircle. We multiply that by the arc:semicircle ratio
+        sleepTime = fractionOfCircle * (radius/3.4);
+    } else {
+        //Speed 16 is about 14cm/s
+        sleepTime = displacement/14.0;
+    }
+    
+    NSMutableDictionary * createdInstructions;
+    createdInstructions = [[NSMutableDictionary alloc] init];
+    
+    if (!forwardFlag) speedIndex = -1*speedIndex;
+    NSNumber * speedInd = [NSNumber numberWithInt:(speedIndex)];
+    createdInstructions[@"SPEED_INDEX"] = speedInd;
+    
+    if (!rightTurnFlag) steerIndex = -1*steerIndex;
+    NSNumber * steerInd = [NSNumber numberWithInt:(steerIndex)];
+    createdInstructions[@"STEER_INDEX"] = steerInd;
+    
+    NSNumber * time = [NSNumber numberWithFloat:(sleepTime)];
+    createdInstructions[@"SLEEP_TIME"] = time;
+    
+    return createdInstructions;
 }
 
 -(void) initGestures {
@@ -244,6 +476,78 @@ static NSMutableDictionary * microcarCommands = nil;
     NSLog(@"Command: NO_SPEED");
     self.sendIntermediate = microcarCommands[@"NO_SPEED"];
     [self initMoveSequence];
+}
+
+
+//Sound Array Stuff
+- (void) initNetworkCommunication {
+    
+    NSLog(@"At initNetwork Communication\n");
+    CFReadStreamRef readStream;
+    
+    //HELP!
+    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)self.ipAddress, self.portNumber, &readStream, NULL);
+    
+    inputStream = (__bridge NSInputStream *)readStream;
+    [inputStream setDelegate:self];
+    [inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [inputStream open];
+}
+
+
+- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
+    
+    //NSLog(@"stream event %i", streamEvent);
+    
+    switch (streamEvent) {
+        case NSStreamEventOpenCompleted:
+            [self tLog:@"Connected!"];
+            NSLog(@"Stream opened");
+            break;
+            
+        case NSStreamEventHasBytesAvailable:
+            if (theStream == inputStream) {
+                uint8_t buffer[1024];
+                int len;
+                
+                while ([inputStream hasBytesAvailable]) {
+                    len = [inputStream read:buffer maxLength:sizeof(buffer)];
+                    
+                    if (len > 0) {
+                        //output contains the following format: array: distance, angle
+                        NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
+                        
+                        if (nil != output) {
+                            [self tLog:[NSString stringWithFormat:@"> %@", output]];    //prints out received messages
+                            self.soundArrayString = output;
+                            //NSLog(@"soundArrayString %@", self.soundArrayString);
+                        }
+                    }
+                }   //while
+            }
+            break;
+            
+        case NSStreamEventErrorOccurred:
+            [self tLog:@"Can not conenct to the host!"];
+            NSLog(@"Can not connect to the host!");
+            break;
+            
+        case NSStreamEventEndEncountered:
+            [theStream close];
+            [theStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+            theStream = nil;
+            break;
+            
+        default:
+            [self tLog:@"Unknown event. Mwahahahahaha"];
+            NSLog(@"Unknown event");
+    }
+}
+
+
+- (void)tLog:(NSString *) msg {
+    self.testTextView.text = [@"\r\n\r\n" stringByAppendingString:self.testTextView.text];
+    self.testTextView.text= [msg stringByAppendingString:self.testTextView.text];
 }
 
 @end

@@ -10,6 +10,18 @@
 @import ExternalAccessory;
 
 @interface ViewController : UIViewController
+
+//Sound Array Stuff
+@property (weak, nonatomic) IBOutlet UITextView *testTextView;
+@property (nonatomic) NSString *soundArrayString;
+@property (nonatomic) NSString *ipAddress;
+@property (nonatomic) NSInteger portNumber;
+@property (nonatomic, retain) NSInputStream *inputStream;
+
+- (void) initNetworkCommunication;
+- (void) tLog:(NSString *) msg;
+
+
 @property(nonatomic,strong) EAAccessory *microCar;
 @property(nonatomic,strong) EASession *session;
 @property(nonatomic,retain) NSArray *deviceList;
@@ -22,7 +34,20 @@
 @property(nonatomic,retain) NSString *sendIntermediate;
 @property(nonatomic) Byte *byteData;
 @property(nonatomic) NSUInteger byteLen;
--(void)writeDataStream;
+
+@property(nonatomic) NSInteger movementBit;
+@property(nonatomic) NSInteger reverseBit;
+
+@property(nonatomic) float aX;
+@property(nonatomic) float aY;
+
+@property(nonatomic) float bX;
+@property(nonatomic) float bY;
+
+@property(nonatomic) float currentX;
+@property(nonatomic) float currentY;
+
+- (void)writeDataStream;
 - (IBAction)movePlease:(id)sender;
 - (IBAction)releasedSteerSlider:(id)sender;
 - (IBAction)changedSteerSlider:(id)sender;
