@@ -2,7 +2,10 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+<<<<<<< Updated upstream
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+=======
+>>>>>>> Stashed changes
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -10,13 +13,14 @@
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                        <viewControllerLayoutGuide type="top" id="9gV-V3-EUK"/>
+                        <viewControllerLayoutGuide type="bottom" id="CBn-jF-GCh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+<<<<<<< Updated upstream
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Iwq-Kr-eDi">
                                 <rect key="frame" x="104" y="376" width="472" height="31"/>
                                 <connections>
@@ -30,12 +34,38 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="ZKS-Hc-kWs"/>
                                 </constraints>
+=======
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="eFG-xd-o5K">
+                                <rect key="frame" x="98" y="377" width="404" height="31"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="98" y="377" width="404" height="31"/>
+                                </variation>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="98" y="377" width="404" height="31"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="98" y="377" width="404" height="31"/>
+                                </variation>
+                                <connections>
+                                    <action selector="changedSpeedSlider:" destination="vXZ-lx-hvc" eventType="valueChanged" id="HfP-pF-I5I"/>
+                                    <action selector="releasedSpeedSlider:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="GrH-nZ-zPi"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTO-pL-Ysx">
+                                <rect key="frame" x="279" y="197" width="42" height="21"/>
+>>>>>>> Stashed changes
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+<<<<<<< Updated upstream
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Speed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAJ-jB-lA0">
                                 <rect key="frame" x="46" y="430" width="50" height="21"/>
+=======
+<<<<<<< Updated upstream
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAJ-jB-lA0">
+                                <rect key="frame" x="46" y="430" width="50" height="20.5"/>
+>>>>>>> Stashed changes
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="JYg-8B-44b"/>
                                 </constraints>
@@ -67,6 +97,22 @@
                                     <action selector="changedSpeedSlider:" destination="vXZ-lx-hvc" eventType="valueChanged" id="w0e-t6-Sh5"/>
                                     <action selector="releasedSpeedSlider:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TqA-yr-Ljg"/>
                                     <action selector="releasedSpeedSlider:" destination="vXZ-lx-hvc" eventType="touchUpOutside" id="Y2S-Ow-uLk"/>
+=======
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aBs-mP-daW">
+                                <rect key="frame" x="98" y="285" width="404" height="31"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="98" y="285" width="404" height="31"/>
+                                </variation>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="98" y="285" width="404" height="31"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="98" y="285" width="404" height="31"/>
+                                </variation>
+                                <connections>
+                                    <action selector="changedSteerSlider:" destination="vXZ-lx-hvc" eventType="valueChanged" id="ykL-9e-XXN"/>
+                                    <action selector="releasedSteerSlider:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="qOk-L7-nQR"/>
+>>>>>>> Stashed changes
                                 </connections>
                             </slider>
                         </subviews>
@@ -90,13 +136,20 @@
                         </constraints>
                     </view>
                     <connections>
+<<<<<<< Updated upstream
                         <outlet property="deviceListLabel" destination="eJT-DB-hve" id="qus-Yi-Oar"/>
                         <outlet property="speedSlider" destination="6HQ-yJ-QAZ" id="Gxu-dk-d2g"/>
                         <outlet property="steerSlider" destination="Iwq-Kr-eDi" id="AqZ-Vb-5XS"/>
+=======
+                        <outlet property="deviceListLabel" destination="wTO-pL-Ysx" id="oCi-5v-hKl"/>
+                        <outlet property="speedSlider" destination="eFG-xd-o5K" id="UqC-gE-8a8"/>
+                        <outlet property="steerSlider" destination="aBs-mP-daW" id="F3Z-cT-zxh"/>
+>>>>>>> Stashed changes
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="224" y="-309"/>
         </scene>
     </scenes>
 </document>
