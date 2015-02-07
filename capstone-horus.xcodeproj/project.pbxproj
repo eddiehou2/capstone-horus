@@ -29,20 +29,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-<<<<<<< Updated upstream
 		18A9F8151A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundArrayClientAppDelegate.h; path = ../../SoundArrayClientAppDelegate.h; sourceTree = "<group>"; };
 		18A9F8161A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundArrayClientAppDelegate.m; path = ../../SoundArrayClientAppDelegate.m; sourceTree = "<group>"; };
 		18A9F8171A7F29A3009EF0A7 /* SoundArrayClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundArrayClientViewController.h; path = ../../SoundArrayClientViewController.h; sourceTree = "<group>"; };
 		18A9F8181A7F29A3009EF0A7 /* SoundArrayClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundArrayClientViewController.m; path = ../../SoundArrayClientViewController.m; sourceTree = "<group>"; };
-=======
-<<<<<<< Updated upstream
-=======
-		18D3152A1A586598003E2253 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
-		18D3152B1A586598003E2253 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
-		18D3152C1A586598003E2253 /* GridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
-		18D3152D1A586598003E2253 /* GridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridViewController.m; path = "/Users/henryzhang/Documents/Capstone/capstone-horus/capstone-horus/GridViewController.m"; sourceTree = "<absolute>"; };
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 		6E0E85BE1A212D73003057AB /* capstone-horus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "capstone-horus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E85C21A212D73003057AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E0E85C31A212D73003057AB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
