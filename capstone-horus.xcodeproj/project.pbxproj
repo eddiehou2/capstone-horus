@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18A9F8191A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A9F8161A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.m */; };
-		18A9F81A1A7F29A3009EF0A7 /* SoundArrayClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A9F8181A7F29A3009EF0A7 /* SoundArrayClientViewController.m */; };
 		6E0E85C41A212D73003057AB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C31A212D73003057AB /* main.m */; };
 		6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C61A212D73003057AB /* AppDelegate.m */; };
 		6E0E85CA1A212D73003057AB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C91A212D73003057AB /* ViewController.m */; };
@@ -16,8 +14,8 @@
 		6E0E85CF1A212D73003057AB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E0E85CE1A212D73003057AB /* Images.xcassets */; };
 		6E0E85D21A212D73003057AB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E0E85D01A212D73003057AB /* LaunchScreen.xib */; };
 		6E0E85DE1A212D74003057AB /* capstone_horusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85DD1A212D74003057AB /* capstone_horusTests.m */; };
-		849717711A8508A6001994A4 /* SoundArrayClientAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497176E1A8508A6001994A4 /* SoundArrayClientAppDelegate.m */; };
-		849717721A8508A6001994A4 /* SoundArrayClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 849717701A8508A6001994A4 /* SoundArrayClientViewController.m */; };
+		84A097CF1AACA04C0099F43A /* SoundArrayClientAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A097CC1AACA04C0099F43A /* SoundArrayClientAppDelegate.m */; };
+		84A097D01AACA04C0099F43A /* SoundArrayClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A097CE1AACA04C0099F43A /* SoundArrayClientViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,10 +29,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18A9F8151A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundArrayClientAppDelegate.h; path = ../../SoundArrayClientAppDelegate.h; sourceTree = "<group>"; };
-		18A9F8161A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundArrayClientAppDelegate.m; path = ../../SoundArrayClientAppDelegate.m; sourceTree = "<group>"; };
-		18A9F8171A7F29A3009EF0A7 /* SoundArrayClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundArrayClientViewController.h; path = ../../SoundArrayClientViewController.h; sourceTree = "<group>"; };
-		18A9F8181A7F29A3009EF0A7 /* SoundArrayClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundArrayClientViewController.m; path = ../../SoundArrayClientViewController.m; sourceTree = "<group>"; };
 		6E0E85BE1A212D73003057AB /* capstone-horus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "capstone-horus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E85C21A212D73003057AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E0E85C31A212D73003057AB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -48,10 +42,10 @@
 		6E0E85D71A212D74003057AB /* capstone-horusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "capstone-horusTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E85DC1A212D74003057AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E0E85DD1A212D74003057AB /* capstone_horusTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = capstone_horusTests.m; sourceTree = "<group>"; };
-		8497176D1A8508A6001994A4 /* SoundArrayClientAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundArrayClientAppDelegate.h; path = ../../../../Downloads/client/SoundArrayClientAppDelegate.h; sourceTree = "<group>"; };
-		8497176E1A8508A6001994A4 /* SoundArrayClientAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundArrayClientAppDelegate.m; path = ../../../../Downloads/client/SoundArrayClientAppDelegate.m; sourceTree = "<group>"; };
-		8497176F1A8508A6001994A4 /* SoundArrayClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundArrayClientViewController.h; path = ../../../../Downloads/client/SoundArrayClientViewController.h; sourceTree = "<group>"; };
-		849717701A8508A6001994A4 /* SoundArrayClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundArrayClientViewController.m; path = ../../../../Downloads/client/SoundArrayClientViewController.m; sourceTree = "<group>"; };
+		84A097CB1AACA04C0099F43A /* SoundArrayClientAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundArrayClientAppDelegate.h; sourceTree = "<group>"; };
+		84A097CC1AACA04C0099F43A /* SoundArrayClientAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundArrayClientAppDelegate.m; sourceTree = "<group>"; };
+		84A097CD1AACA04C0099F43A /* SoundArrayClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundArrayClientViewController.h; sourceTree = "<group>"; };
+		84A097CE1AACA04C0099F43A /* SoundArrayClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundArrayClientViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,15 +91,11 @@
 				6E0E85C61A212D73003057AB /* AppDelegate.m */,
 				6E0E85C81A212D73003057AB /* ViewController.h */,
 				6E0E85C91A212D73003057AB /* ViewController.m */,
-				18A9F8151A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.h */,
-				18A9F8161A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.m */,
-				18A9F8171A7F29A3009EF0A7 /* SoundArrayClientViewController.h */,
-				18A9F8181A7F29A3009EF0A7 /* SoundArrayClientViewController.m */,
+				84A097CB1AACA04C0099F43A /* SoundArrayClientAppDelegate.h */,
+				84A097CC1AACA04C0099F43A /* SoundArrayClientAppDelegate.m */,
+				84A097CD1AACA04C0099F43A /* SoundArrayClientViewController.h */,
+				84A097CE1AACA04C0099F43A /* SoundArrayClientViewController.m */,
 				6E0E85CB1A212D73003057AB /* Main.storyboard */,
-				8497176D1A8508A6001994A4 /* SoundArrayClientAppDelegate.h */,
-				8497176E1A8508A6001994A4 /* SoundArrayClientAppDelegate.m */,
-				8497176F1A8508A6001994A4 /* SoundArrayClientViewController.h */,
-				849717701A8508A6001994A4 /* SoundArrayClientViewController.m */,
 				6E0E85CE1A212D73003057AB /* Images.xcassets */,
 				6E0E85D01A212D73003057AB /* LaunchScreen.xib */,
 				6E0E85C11A212D73003057AB /* Supporting Files */,
@@ -241,9 +231,9 @@
 			files = (
 				6E0E85CA1A212D73003057AB /* ViewController.m in Sources */,
 				6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */,
+				84A097D01AACA04C0099F43A /* SoundArrayClientViewController.m in Sources */,
 				6E0E85C41A212D73003057AB /* main.m in Sources */,
-				18A9F81A1A7F29A3009EF0A7 /* SoundArrayClientViewController.m in Sources */,
-				18A9F8191A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.m in Sources */,
+				84A097CF1AACA04C0099F43A /* SoundArrayClientAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
