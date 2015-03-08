@@ -49,6 +49,8 @@
 @property(nonatomic) float currentX;
 @property(nonatomic) float currentY;
 
+@property(nonatomic) NSString *referencePoint;
+
 - (void)writeDataStream;
 - (IBAction)movePlease:(id)sender;
 - (IBAction)releasedSteerSlider:(id)sender;

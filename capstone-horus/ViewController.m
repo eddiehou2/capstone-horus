@@ -64,6 +64,7 @@ static NSMutableDictionary * microcarCommands = nil;
     self.currentX = 0.0f;
     self.currentY = 0.0f;
     
+    self.referencePoint = @"0.0 10.0";
     
     //At this point, self.ipAddress and self.portNumber are set to the values the user has inputted
     [self tLog:[NSString stringWithFormat:@"At View Controller: Connecting to IP Address: %@, Port Number: %d", self.ipAddress, self.portNumber]];
@@ -98,7 +99,7 @@ static NSMutableDictionary * microcarCommands = nil;
 }
 
 - (void)simpleMove {
-    int speedIndex = 16;
+    int speedIndex = 8;
     int steerIndex;
 
     if (self.reverseBit == 1) {
@@ -107,7 +108,7 @@ static NSMutableDictionary * microcarCommands = nil;
         self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_BACK"][speedIndex], microcarCommands[@"STEER_LEFT"][2]];
     }
     
-    [NSThread sleepForTimeInterval:1.9f];   //move for 2 sec = 23 cm
+    [NSThread sleepForTimeInterval:3.8f];   //move for 2 sec = 23 cm
     
     self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
 }
@@ -119,14 +120,72 @@ static NSMutableDictionary * microcarCommands = nil;
     else turn = @"STEER_LEFT";
     
     if (self.reverseBit == 1) {
-        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_FRONT"][16], microcarCommands[turn][steeringIndex]];
+        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_FRONT"][8], microcarCommands[turn][steeringIndex]];
     } else {
-        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_BACK"][16], microcarCommands[turn][steeringIndex]];
+        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_BACK"][8], microcarCommands[turn][steeringIndex]];
     }
+    
+    NSLog(@"Changed the steering of the car to: %@ with an index of %d", turn, steeringIndex);
 }
 
 - (void)stop {
     self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
+}
+
+//This method spends 6 seconds to build a reference point for the car
+- (void)buildReferencePoint {
+    CFTimeInterval targetTime = CACurrentMediaTime() + 6.0f;
+    CFTimeInterval currentTime;
+    
+    int frequencyArrayX[200] = {0};
+    int frequencyArrayY[200] = {0};
+    int maxX = 0;
+    int maxY = 0;
+    int maxIndexX = 0;
+    int maxIndexY = 0;
+    
+    do {
+        NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+        int currentX = [components[1] intValue];
+        int currentY = [components[2] intValue];
+        
+        frequencyArrayX[currentX + 100]++;
+        frequencyArrayY[currentY + 100]++;
+        
+        currentTime = CACurrentMediaTime();
+    } while (currentTime < targetTime);
+    
+    for (int i = 0; i < 200; i ++) {
+        if (maxX < frequencyArrayX[i]) {
+            maxX = frequencyArrayX[i];
+            maxIndexX = i;
+        }
+        
+        if (maxY < frequencyArrayY[i]) {
+            maxY = frequencyArrayY[i];
+            maxIndexY = i;
+        }
+    }
+    
+    self.referencePoint = [NSString stringWithFormat:@"%@ %@",[@(maxIndexX - 100) stringValue], [@(maxIndexY - 100) stringValue]];
+}
+
+- (BOOL)referenceCheckWithArrayData:(NSString *)arrayData {
+    BOOL success = false;
+    
+    NSMutableArray * components = [[self.referencePoint componentsSeparatedByString:@" "] mutableCopy];
+    int currentX = [components[0] intValue];
+    int currentY = [components[1] intValue];
+    
+    NSMutableArray * components2 = [[arrayData componentsSeparatedByString:@" "] mutableCopy];
+    int currentX2 = [components2[1] intValue];
+    int currentY2 = [components2[2] intValue];
+    
+    if (abs(currentX2 - currentX) < 5 && abs(currentY2 - currentY) < 5) {
+        success = true;
+    }
+    
+    return success;
 }
 
 /*
@@ -350,7 +409,12 @@ static NSMutableDictionary * microcarCommands = nil;
             for (int i = 0; i < cycles; i++) {  //i is the iteration no.
                 
                 //Sleep for six seconds to let the array detect position
-                [NSThread sleepForTimeInterval:6.0f];
+                //In the first iteration of the loop, the six seconds are used to build a reference point
+                if (i == 0) [self buildReferencePoint];
+                else [NSThread sleepForTimeInterval:6.0f];
+                
+                //Log the reference point
+                NSLog(@"The reference point is: %@", self.referencePoint);
                 
                 //Print out global destination positions
                 NSLog(@"aX is: %f", self.aX);
@@ -391,129 +455,147 @@ static NSMutableDictionary * microcarCommands = nil;
                         NSDate *start = [NSDate date];
                         CFTimeInterval startTime = CACurrentMediaTime();
                         
+                        NSString *prevString = self.soundArrayString;
+                        
                         //Start loop to continuously check position
                         while (1) {
+                            //Boolean to determine whether the data extracted from the sound array should be used or not
+                            BOOL referenceCheck = false;
                             
                             //Start default value for steering: no steer.
                             int steerIndex = 0;
                             int rightTurn = 1;
                             
                             //Extract data from sound array
-                            NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                            NSLog(@"Components array - x:%@, y:%@\n", components[1], components[2]);
-                            self.currentX = [components[1] floatValue];
-                            self.currentY = [components[2] floatValue];
+                            NSString *currentString = self.soundArrayString;
                             
-                            //If the car is moving forwards
-                            if (self.reverseBit == 1) {
-                                if ((self.currentX - self.bX) > 0 && (self.currentX - self.bX) <= 4) {
-                                    steerIndex = 0; rightTurn = 1;  //2,0, 0,1
-                                } else if ((self.currentX - self.bX) > 4 && (self.currentX - self.bX) <= 8) {
-                                    steerIndex = 0; rightTurn = 1;  //2,0, 0,1
-                                } else if ((self.currentX - self.bX) > 8 && (self.currentX - self.bX) <= 12) {
-                                    steerIndex = 1; rightTurn = 0;
-                                } else if ((self.currentX - self.bX) > 12 && (self.currentX - self.bX) <= 16) {
-                                    steerIndex = 1; rightTurn = 0;
-                                } else if ((self.currentX - self.bX) > 16) {
-                                    steerIndex = 2; rightTurn = 0;
-                                } else if ((self.currentX - self.bX) < 0 && (self.currentX - self.bX) >= -4) {
-                                    steerIndex = 0; rightTurn = 0;
-                                } else if ((self.currentX - self.bX) < -4 && (self.currentX - self.bX) >= -8) {
-                                    steerIndex = 1; rightTurn = 1;
-                                } else if ((self.currentX - self.bX) < -8 && (self.currentX - self.bX) >= -12) {
-                                    steerIndex = 2; rightTurn = 1;
-                                } else if ((self.currentX - self.bX) < -12 && (self.currentX - self.bX) >= -16) {
-                                    steerIndex = 2; rightTurn = 1;
-                                } else if ((self.currentX - self.bX) < -16) {
-                                    steerIndex = 2; rightTurn = 1;
-                                } else if (self.currentX == self.bX) {
-                                    steerIndex = 0; rightTurn = 1;
+                            if (![currentString isEqualToString:prevString]) {
+                                NSMutableArray * components = [[currentString componentsSeparatedByString:@" "] mutableCopy];
+                                //NSLog(@"Components array - x:%@, y:%@", components[1], components[2]);
+                                self.currentX = [components[1] floatValue];
+                                self.currentY = [components[2] floatValue];
+                                
+                                //Perform the check against the reference point
+                                referenceCheck = [self referenceCheckWithArrayData:currentString];
+                                NSLog(@"Reference Check returned: %hhd", referenceCheck);
+                                
+                                NSLog(@"The Reference Point is currently: %@", self.referencePoint);
+                                
+                                if (referenceCheck) self.referencePoint = [NSString stringWithFormat:@"%f %f", self.currentX, self.currentY];
+                                
+                                //If the car is moving forwards
+                                if (self.reverseBit == 1 && referenceCheck) {
+                                    if ((self.currentX - self.bX) > 0 && (self.currentX - self.bX) <= 4) {
+                                        steerIndex = 0; rightTurn = 1;  //2,0, 0,1
+                                    } else if ((self.currentX - self.bX) > 4 && (self.currentX - self.bX) <= 8) {
+                                        steerIndex = 0; rightTurn = 1;  //2,0, 0,1
+                                    } else if ((self.currentX - self.bX) > 8 && (self.currentX - self.bX) <= 12) {
+                                        steerIndex = 1; rightTurn = 0;
+                                    } else if ((self.currentX - self.bX) > 12 && (self.currentX - self.bX) <= 16) {
+                                        steerIndex = 1; rightTurn = 0;
+                                    } else if ((self.currentX - self.bX) > 16) {
+                                        steerIndex = 2; rightTurn = 0;
+                                    } else if ((self.currentX - self.bX) < 0 && (self.currentX - self.bX) >= -4) {
+                                        steerIndex = 0; rightTurn = 0;
+                                    } else if ((self.currentX - self.bX) < -4 && (self.currentX - self.bX) >= -8) {
+                                        steerIndex = 1; rightTurn = 1;
+                                    } else if ((self.currentX - self.bX) < -8 && (self.currentX - self.bX) >= -12) {
+                                        steerIndex = 2; rightTurn = 1;
+                                    } else if ((self.currentX - self.bX) < -12 && (self.currentX - self.bX) >= -16) {
+                                        steerIndex = 2; rightTurn = 1;
+                                    } else if ((self.currentX - self.bX) < -16) {
+                                        steerIndex = 2; rightTurn = 1;
+                                    } else if (self.currentX == self.bX) {
+                                        steerIndex = 0; rightTurn = 1;
+                                    }
+                                    /*
+                                     if (self.currentX > self.bX) {
+                                     steerIndex = 2;
+                                     rightTurn = 0;
+                                     } else if (self.currentX < self.bX) {
+                                     steerIndex = 2;
+                                     rightTurn = 1;
+                                     } else if (self.currentX == self.bX) {
+                                     steerIndex = 0;
+                                     rightTurn = 1;
+                                     }
+                                     */
+                                    //if (self.currentY >= self.bY) stopCheck = 0;
+                                    //NSLog(@"bY is: %f", self.bY);
+                                    
+                                    //If the car is moving backwards
+                                } else if (self.reverseBit == -1 && referenceCheck) {
+                                    if ((self.currentX - self.aX) > 0 && (self.currentX - self.aX) <= 4) {
+                                        steerIndex = 2; rightTurn = 0;  //0,0, 1,0 but move more to the left...
+                                    } else if ((self.currentX - self.aX) > 4 && (self.currentX - self.aX) <= 8) {
+                                        steerIndex = 1; rightTurn = 0;  //0,0
+                                    } else if ((self.currentX - self.aX) > 8 && (self.currentX - self.aX) <= 12) {
+                                        steerIndex = 0; rightTurn = 0;
+                                    } else if ((self.currentX - self.aX) > 12 && (self.currentX - self.aX) <= 16) {
+                                        steerIndex = 1; rightTurn = 1;
+                                    } else if ((self.currentX - self.aX) > 16) {
+                                        steerIndex = 1; rightTurn = 1;
+                                    } else if ((self.currentX - self.aX) < 0 && (self.currentX - self.aX) >= -4) {
+                                        steerIndex = 0; rightTurn = 1;  //2 //change this lower...
+                                    } else if ((self.currentX - self.aX) < -4 && (self.currentX - self.aX) >= -8) {
+                                        steerIndex = 1.; rightTurn = 1;
+                                    } else if ((self.currentX - self.aX) < -8 && (self.currentX - self.aX) >= -12) {
+                                        steerIndex = 1; rightTurn = 1;
+                                    } else if ((self.currentX - self.aX) < -12 && (self.currentX - self.aX) >= -16) {
+                                        steerIndex = 1; rightTurn = 0;
+                                    } else if ((self.currentX - self.aX) < -16) {
+                                        steerIndex = 1; rightTurn = 0;
+                                    } else if (self.currentX == self.aX) {
+                                        steerIndex = 0; rightTurn = 0;
+                                    }
+                                    /*
+                                     if (self.currentX > self.aX) {
+                                     steerIndex = 4;
+                                     rightTurn = 0;
+                                     } else if (self.currentX < self.aX) {
+                                     steerIndex = 0;
+                                     rightTurn = 1;
+                                     } else if (self.currentX == self.aX) {
+                                     steerIndex = 2;
+                                     rightTurn = 0;
+                                     }
+                                     */
+                                    //if (self.currentY <= self.aY) stopCheck = 0;
+                                    //NSLog(@"aY is: %f", self.aY);
                                 }
-                                /*
-                                if (self.currentX > self.bX) {
-                                    steerIndex = 2;
-                                    rightTurn = 0;
-                                } else if (self.currentX < self.bX) {
-                                    steerIndex = 2;
-                                    rightTurn = 1;
-                                } else if (self.currentX == self.bX) {
-                                    steerIndex = 0;
-                                    rightTurn = 1;
-                                }
-                                */
-                                //if (self.currentY >= self.bY) stopCheck = 0;
-                                //NSLog(@"bY is: %f", self.bY);
-                            
-                            //If the car is moving backwards
-                            } else if (self.reverseBit == -1) {
-                                if ((self.currentX - self.aX) > 0 && (self.currentX - self.aX) <= 4) {
-                                    steerIndex = 2; rightTurn = 0;  //0,0, 1,0 but move more to the left...
-                                } else if ((self.currentX - self.aX) > 4 && (self.currentX - self.aX) <= 8) {
-                                    steerIndex = 1; rightTurn = 0;  //0,0
-                                } else if ((self.currentX - self.aX) > 8 && (self.currentX - self.aX) <= 12) {
-                                    steerIndex = 0; rightTurn = 0;
-                                } else if ((self.currentX - self.aX) > 12 && (self.currentX - self.aX) <= 16) {
-                                    steerIndex = 1; rightTurn = 1;
-                                } else if ((self.currentX - self.aX) > 16) {
-                                    steerIndex = 1; rightTurn = 1;
-                                } else if ((self.currentX - self.aX) < 0 && (self.currentX - self.aX) >= -4) {
-                                    steerIndex = 0; rightTurn = 1;  //2 //change this lower...
-                                } else if ((self.currentX - self.aX) < -4 && (self.currentX - self.aX) >= -8) {
-                                    steerIndex = 1.; rightTurn = 1;
-                                } else if ((self.currentX - self.aX) < -8 && (self.currentX - self.aX) >= -12) {
-                                    steerIndex = 1; rightTurn = 1;
-                                } else if ((self.currentX - self.aX) < -12 && (self.currentX - self.aX) >= -16) {
-                                    steerIndex = 1; rightTurn = 0;
-                                } else if ((self.currentX - self.aX) < -16) {
-                                    steerIndex = 1; rightTurn = 0;
-                                } else if (self.currentX == self.aX) {
-                                    steerIndex = 0; rightTurn = 0;
-                                }
-                                /*
-                                if (self.currentX > self.aX) {
-                                    steerIndex = 4;
-                                    rightTurn = 0;
-                                } else if (self.currentX < self.aX) {
-                                    steerIndex = 0;
-                                    rightTurn = 1;
-                                } else if (self.currentX == self.aX) {
-                                    steerIndex = 2;
-                                    rightTurn = 0;
-                                }
-                                */
-                                //if (self.currentY <= self.aY) stopCheck = 0;
-                                //NSLog(@"aY is: %f", self.aY);
+                                
+                                //Call function, which affects steering only
+                                [self adjustedMoveWithSteeringIndex:steerIndex turnRight:rightTurn];
+                                
+                                //Calculate elapsed time
+                                CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
+                                //NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+                                //NSLog(@"NSDATE elapsedTime: %lf", elapsedTime);
+                                //if ([start timeIntervalSinceNow] >= 1.9) {
+                                
+                                //Extract sound array data AGAIN, for break conditions (see below)
+                                NSMutableArray * components1 = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                                NSLog(@"Components array - x:%@, y:%@\n", components[1], components[2]);
+                                self.currentX = [components1[1] floatValue];
+                                self.currentY = [components1[2] floatValue];
+                                
+                                //Calculate differences. Note: this is currently unused
+                                float dbX = fabs(self.currentX - self.bX);
+                                float dbY = fabs(self.currentY - self.bY);
+                                float daX = fabs(self.currentX - self.aX);
+                                float daY = fabs(self.currentY - self.aY);
+                                
+                                //Break conditions
+                                if(self.reverseBit == 1  && self.currentY >= self.bY) break;
+                                if(self.reverseBit == -1 && self.currentY <= self.aY) break;
+                                //if(self.reverseBit == 1  && (dbX > 0 && dbX <= 4) && (dbY > 0 && dbY <= 4)) break;  //tolerate errors within 4cm
+                                //if(self.reverseBit == -1 && (daX > 0 && daX <= 4) && (daY > 0 && daY <= 4)) break;
+                                
+                                if(elapsedTime >= 5.0)
+                                    break;
+                                
+                                prevString = currentString;
                             }
-                            
-                            //Call function, which affects steering only
-                            [self adjustedMoveWithSteeringIndex:steerIndex turnRight:rightTurn];
-                            
-                            //Calculate elapsed time
-                            CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
-                            //NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
-                            //NSLog(@"NSDATE elapsedTime: %lf", elapsedTime);
-                            //if ([start timeIntervalSinceNow] >= 1.9) {
-                            
-                            //Extract sound array data AGAIN, for break conditions (see below)
-                            NSMutableArray * components1 = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                            NSLog(@"Components array - x:%@, y:%@\n", components[1], components[2]);
-                            self.currentX = [components1[1] floatValue];
-                            self.currentY = [components1[2] floatValue];
-                            
-                            //Calculate differences. Note: this is currently unused
-                            float dbX = fabs(self.currentX - self.bX);
-                            float dbY = fabs(self.currentY - self.bY);
-                            float daX = fabs(self.currentX - self.aX);
-                            float daY = fabs(self.currentY - self.aY);
-                            
-                            //Break conditions
-                            if(self.reverseBit == 1  && self.currentY >= self.bY) break;
-                            if(self.reverseBit == -1 && self.currentY <= self.aY) break;
-                            //if(self.reverseBit == 1  && (dbX > 0 && dbX <= 4) && (dbY > 0 && dbY <= 4)) break;  //tolerate errors within 4cm
-                            //if(self.reverseBit == -1 && (daX > 0 && daX <= 4) && (daY > 0 && daY <= 4)) break;
-                            
-                            if(elapsedTime >= 5.0)
-                                break;
                             
                         } //while
                         self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
