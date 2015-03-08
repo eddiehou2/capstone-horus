@@ -23,6 +23,25 @@
 
 static NSMutableDictionary * microcarCommands = nil;
 
+/*
+- (IBAction)teststeerAngle:(id)sender {
+    int turnRight = 1;
+    int steeringIndex = 4;
+    NSString *turn;
+    
+    if (turnRight == 1) turn = @"STEER_RIGHT";
+    else turn = @"STEER_LEFT";
+    
+    self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_FRONT"][16], microcarCommands[turn][steeringIndex]];
+    
+    [NSThread sleepForTimeInterval:1.0f];   //move for 2 sec = 23 cm
+    
+    self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
+    
+    
+}
+*/
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createDirectionary]; // Creates the direction with instructions to be send
@@ -88,7 +107,7 @@ static NSMutableDictionary * microcarCommands = nil;
         self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_BACK"][speedIndex], microcarCommands[@"STEER_LEFT"][2]];
     }
     
-    [NSThread sleepForTimeInterval:2.0f];
+    [NSThread sleepForTimeInterval:1.9f];   //move for 2 sec = 23 cm
     
     self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
 }
@@ -324,9 +343,9 @@ static NSMutableDictionary * microcarCommands = nil;
         if (self.movementBit == 1) {
             self.sendIntermediate = microcarCommands[@"HORN_ON"];
             
-            int cycles = 10;
+            int cycles = 20;    //no of interations
             
-            for (int i = 0; i < cycles; i++) {
+            for (int i = 0; i < cycles; i++) {  //i is the iteration no.
                 int stopCheck = 1;
                 
                 [NSThread sleepForTimeInterval:6.0f];
@@ -334,7 +353,7 @@ static NSMutableDictionary * microcarCommands = nil;
                 if (self.soundArrayString != nil) {
                     if (i == 0) {
                         NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                        self.aX = [components[1] floatValue];
+                        self.aX = [components[1] floatValue];   //current position, xy
                         self.aY = [components[2] floatValue];
                         
                         [self simpleMove];
@@ -344,7 +363,7 @@ static NSMutableDictionary * microcarCommands = nil;
                         //[self stop];
                     } else if (i == 1) {
                         NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                        self.bX = self.aX;
+                        self.bX = [components[1] floatValue];
                         self.bY = [components[2] floatValue];
                         
                         [self simpleMove];
@@ -353,15 +372,42 @@ static NSMutableDictionary * microcarCommands = nil;
                         
                         //[self stop];
                     } else {
-                        CFTimeInterval start = CACurrentMediaTime();
+                        NSDate *start = [NSDate date];
+                        CFTimeInterval startTime = CACurrentMediaTime();
+                        // perform some action
                         while (1) {
                             int steerIndex = 0;
                             int rightTurn = 1;
                             NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                            NSLog(@"Components array - x:%@, y:%@\n", components[1], components[2]);
                             self.currentX = [components[1] floatValue];
                             self.currentY = [components[2] floatValue];
                             
                             if (self.reverseBit == 1) {
+                                if ((self.currentX - self.bX) > 0 && (self.currentX - self.bX) <= 4) {
+                                    steerIndex = 0; rightTurn = 1;  //2,0, 0,1
+                                } else if ((self.currentX - self.bX) > 4 && (self.currentX - self.bX) <= 8) {
+                                    steerIndex = 0; rightTurn = 1;  //2,0, 0,1
+                                } else if ((self.currentX - self.bX) > 8 && (self.currentX - self.bX) <= 12) {
+                                    steerIndex = 1; rightTurn = 0;
+                                } else if ((self.currentX - self.bX) > 12 && (self.currentX - self.bX) <= 16) {
+                                    steerIndex = 1; rightTurn = 0;
+                                } else if ((self.currentX - self.bX) > 16) {
+                                    steerIndex = 2; rightTurn = 0;
+                                } else if ((self.currentX - self.bX) < 0 && (self.currentX - self.bX) >= -4) {
+                                    steerIndex = 0; rightTurn = 0;
+                                } else if ((self.currentX - self.bX) < -4 && (self.currentX - self.bX) >= -8) {
+                                    steerIndex = 1; rightTurn = 1;
+                                } else if ((self.currentX - self.bX) < -8 && (self.currentX - self.bX) >= -12) {
+                                    steerIndex = 2; rightTurn = 1;
+                                } else if ((self.currentX - self.bX) < -12 && (self.currentX - self.bX) >= -16) {
+                                    steerIndex = 2; rightTurn = 1;
+                                } else if ((self.currentX - self.bX) < -16) {
+                                    steerIndex = 2; rightTurn = 1;
+                                } else if (self.currentX == self.bX) {
+                                    steerIndex = 0; rightTurn = 1;
+                                }
+                                /*
                                 if (self.currentX > self.bX) {
                                     steerIndex = 2;
                                     rightTurn = 0;
@@ -372,11 +418,35 @@ static NSMutableDictionary * microcarCommands = nil;
                                     steerIndex = 0;
                                     rightTurn = 1;
                                 }
-                                
+                                */
                                 //if (self.currentY >= self.bY) stopCheck = 0;
                                 //NSLog(@"bY is: %f", self.bY);
                                 
                             } else if (self.reverseBit == -1) {
+                                if ((self.currentX - self.aX) > 0 && (self.currentX - self.aX) <= 4) {
+                                    steerIndex = 2; rightTurn = 0;  //0,0, 1,0 but move more to the left...
+                                } else if ((self.currentX - self.aX) > 4 && (self.currentX - self.aX) <= 8) {
+                                    steerIndex = 1; rightTurn = 0;  //0,0
+                                } else if ((self.currentX - self.aX) > 8 && (self.currentX - self.aX) <= 12) {
+                                    steerIndex = 0; rightTurn = 0;
+                                } else if ((self.currentX - self.aX) > 12 && (self.currentX - self.aX) <= 16) {
+                                    steerIndex = 1; rightTurn = 1;
+                                } else if ((self.currentX - self.aX) > 16) {
+                                    steerIndex = 1; rightTurn = 1;
+                                } else if ((self.currentX - self.aX) < 0 && (self.currentX - self.aX) >= -4) {
+                                    steerIndex = 0; rightTurn = 1;  //2 //change this lower...
+                                } else if ((self.currentX - self.aX) < -4 && (self.currentX - self.aX) >= -8) {
+                                    steerIndex = 1.; rightTurn = 1;
+                                } else if ((self.currentX - self.aX) < -8 && (self.currentX - self.aX) >= -12) {
+                                    steerIndex = 1; rightTurn = 1;
+                                } else if ((self.currentX - self.aX) < -12 && (self.currentX - self.aX) >= -16) {
+                                    steerIndex = 1; rightTurn = 0;
+                                } else if ((self.currentX - self.aX) < -16) {
+                                    steerIndex = 1; rightTurn = 0;
+                                } else if (self.currentX == self.aX) {
+                                    steerIndex = 0; rightTurn = 0;
+                                }
+                                /*
                                 if (self.currentX > self.aX) {
                                     steerIndex = 4;
                                     rightTurn = 0;
@@ -387,16 +457,36 @@ static NSMutableDictionary * microcarCommands = nil;
                                     steerIndex = 2;
                                     rightTurn = 0;
                                 }
-                                
+                                */
                                 //if (self.currentY <= self.aY) stopCheck = 0;
                                 //NSLog(@"aY is: %f", self.aY);
                             }
                             [self adjustedMoveWithSteeringIndex:steerIndex turnRight:rightTurn];
                             
-                            if ((CACurrentMediaTime() - start) >= 2.0) {
+                            CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
+                            NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+                            NSLog(@"NSDATE elapsedTime: %lf", elapsedTime);
+                            //if ([start timeIntervalSinceNow] >= 1.9) {
+                            
+                            NSMutableArray * components1 = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                            NSLog(@"Components array - x:%@, y:%@\n", components[1], components[2]);
+                            self.currentX = [components1[1] floatValue];
+                            self.currentY = [components1[2] floatValue];
+                            
+                            float dbX = fabs(self.currentX - self.bX);
+                            float dbY = fabs(self.currentY - self.bY);
+                            float daX = fabs(self.currentX - self.aX);
+                            float daY = fabs(self.currentY - self.aY);
+                            
+                            if(self.reverseBit == 1  && self.currentX == self.bX && self.currentY == self.bY) break;
+                            if(self.reverseBit == -1 && self.currentX == self.aX && self.currentY == self.aY) break;
+                            //if(self.reverseBit == 1  && (dbX > 0 && dbX <= 4) && (dbY > 0 && dbY <= 4)) break;  //tolerate errors within 4cm
+                            //if(self.reverseBit == -1 && (daX > 0 && daX <= 4) && (daY > 0 && daY <= 4)) break;
+                            
+                            if(elapsedTime >= 1.9)
                                 break;
-                            }
-                        }
+                            
+                        } //while
                         self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
                     }
                 } else {
@@ -620,7 +710,7 @@ static NSMutableDictionary * microcarCommands = nil;
             
         case NSStreamEventErrorOccurred:
             [self tLog:@"Can not conenct to the host!"];
-            NSLog(@"Can not connect to the host!");
+            NSLog(@"Can not connect to the host!"); // why?
             break;
             
         case NSStreamEventEndEncountered:
@@ -631,7 +721,7 @@ static NSMutableDictionary * microcarCommands = nil;
             
         default:
             [self tLog:@"Unknown event. Mwahahahahaha"];
-            NSLog(@"Unknown event");
+            NSLog(@"Unknown event. At sound array");
     }
 }
 
