@@ -132,9 +132,9 @@ static NSMutableDictionary * microcarCommands = nil;
     self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
 }
 
-//This method spends 6 seconds to build a reference point for the car
+//This method spends 10 seconds to build a reference point for the car
 - (void)buildReferencePoint {
-    CFTimeInterval targetTime = CACurrentMediaTime() + 6.0f;
+    CFTimeInterval targetTime = CACurrentMediaTime() + 10.0f;
     CFTimeInterval currentTime;
     
     int frequencyArrayX[200] = {0};
@@ -411,7 +411,7 @@ static NSMutableDictionary * microcarCommands = nil;
                 //Sleep for six seconds to let the array detect position
                 //In the first iteration of the loop, the six seconds are used to build a reference point
                 if (i == 0) [self buildReferencePoint];
-                else [NSThread sleepForTimeInterval:6.0f];
+                else [NSThread sleepForTimeInterval:10.0f];
                 
                 //Log the reference point
                 NSLog(@"The reference point is: %@", self.referencePoint);
@@ -567,35 +567,35 @@ static NSMutableDictionary * microcarCommands = nil;
                                 //Call function, which affects steering only
                                 [self adjustedMoveWithSteeringIndex:steerIndex turnRight:rightTurn];
                                 
-                                //Calculate elapsed time
-                                CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
-                                //NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
-                                //NSLog(@"NSDATE elapsedTime: %lf", elapsedTime);
-                                //if ([start timeIntervalSinceNow] >= 1.9) {
-                                
-                                //Extract sound array data AGAIN, for break conditions (see below)
-                                NSMutableArray * components1 = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                                NSLog(@"Components array - x:%@, y:%@\n", components[1], components[2]);
-                                self.currentX = [components1[1] floatValue];
-                                self.currentY = [components1[2] floatValue];
-                                
-                                //Calculate differences. Note: this is currently unused
-                                float dbX = fabs(self.currentX - self.bX);
-                                float dbY = fabs(self.currentY - self.bY);
-                                float daX = fabs(self.currentX - self.aX);
-                                float daY = fabs(self.currentY - self.aY);
-                                
-                                //Break conditions
-                                if(self.reverseBit == 1  && self.currentY >= self.bY) break;
-                                if(self.reverseBit == -1 && self.currentY <= self.aY) break;
-                                //if(self.reverseBit == 1  && (dbX > 0 && dbX <= 4) && (dbY > 0 && dbY <= 4)) break;  //tolerate errors within 4cm
-                                //if(self.reverseBit == -1 && (daX > 0 && daX <= 4) && (daY > 0 && daY <= 4)) break;
-                                
-                                if(elapsedTime >= 5.0)
-                                    break;
-                                
                                 prevString = currentString;
                             }
+                            
+                            //Calculate elapsed time
+                            CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
+                            //NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+                            //NSLog(@"NSDATE elapsedTime: %lf", elapsedTime);
+                            //if ([start timeIntervalSinceNow] >= 1.9) {
+                            
+                            //Extract sound array data AGAIN, for break conditions (see below)
+                            NSMutableArray * components1 = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                            NSLog(@"Components array - x:%@, y:%@\n", components1[1], components1[2]);
+                            self.currentX = [components1[1] floatValue];
+                            self.currentY = [components1[2] floatValue];
+                            
+                            //Calculate differences. Note: this is currently unused
+                            float dbX = fabs(self.currentX - self.bX);
+                            float dbY = fabs(self.currentY - self.bY);
+                            float daX = fabs(self.currentX - self.aX);
+                            float daY = fabs(self.currentY - self.aY);
+                            
+                            //Break conditions
+                            if(self.reverseBit == 1  && self.currentY >= self.bY) break;
+                            if(self.reverseBit == -1 && self.currentY <= self.aY) break;
+                            //if(self.reverseBit == 1  && (dbX > 0 && dbX <= 4) && (dbY > 0 && dbY <= 4)) break;  //tolerate errors within 4cm
+                            //if(self.reverseBit == -1 && (daX > 0 && daX <= 4) && (daY > 0 && daY <= 4)) break;
+                            
+                            if(elapsedTime >= 5.0)
+                                break;
                             
                         } //while
                         self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
