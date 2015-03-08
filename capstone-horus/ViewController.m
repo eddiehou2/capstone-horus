@@ -78,6 +78,39 @@ static NSMutableDictionary * microcarCommands = nil;
     self.movementBit = 1;
 }
 
+- (void)simpleMove {
+    int speedIndex = 16;
+    int steerIndex;
+
+    if (self.reverseBit == 1) {
+        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_FRONT"][speedIndex], microcarCommands[@"NO_STEER"]];
+    } else {
+        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_BACK"][speedIndex], microcarCommands[@"STEER_LEFT"][2]];
+    }
+    
+    [NSThread sleepForTimeInterval:2.0f];
+    
+    self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
+}
+
+- (void)adjustedMoveWithSteeringIndex:(int)steeringIndex turnRight:(int)turnRight {
+    NSString *turn;
+    
+    if (turnRight == 1) turn = @"STEER_RIGHT";
+    else turn = @"STEER_LEFT";
+    
+    if (self.reverseBit == 1) {
+        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_FRONT"][16], microcarCommands[turn][steeringIndex]];
+    } else {
+        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"SPEED_BACK"][16], microcarCommands[turn][steeringIndex]];
+    }
+}
+
+- (void)stop {
+    self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
+}
+
+/*
 - (void)moveCycle {
     int speedIndex;
     int steerIndex;
@@ -134,7 +167,7 @@ static NSMutableDictionary * microcarCommands = nil;
     [NSThread sleepForTimeInterval:sleepTime];
     
     self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
-}
+} */
 
 - (IBAction)releasedSteerSlider:(id)sender {
     [self.steerSlider setValue:0.5f];
@@ -294,6 +327,8 @@ static NSMutableDictionary * microcarCommands = nil;
             int cycles = 10;
             
             for (int i = 0; i < cycles; i++) {
+                int stopCheck = 1;
+                
                 [NSThread sleepForTimeInterval:6.0f];
                 
                 if (self.soundArrayString != nil) {
@@ -301,17 +336,73 @@ static NSMutableDictionary * microcarCommands = nil;
                         NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
                         self.aX = [components[1] floatValue];
                         self.aY = [components[2] floatValue];
+                        
+                        [self simpleMove];
+                        
+                        //[NSThread sleepForTimeInterval:1.5f];
+                        
+                        //[self stop];
                     } else if (i == 1) {
                         NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                        self.bX = [components[1] floatValue];
+                        self.bX = self.aX;
                         self.bY = [components[2] floatValue];
+                        
+                        [self simpleMove];
+                        
+                        //[NSThread sleepForTimeInterval:1.5f];
+                        
+                        //[self stop];
                     } else {
-                        NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                        self.currentX = [components[1] floatValue];
-                        self.currentY = [components[2] floatValue];
+                        CFTimeInterval start = CACurrentMediaTime();
+                        while (1) {
+                            int steerIndex = 0;
+                            int rightTurn = 1;
+                            NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                            self.currentX = [components[1] floatValue];
+                            self.currentY = [components[2] floatValue];
+                            
+                            if (self.reverseBit == 1) {
+                                if (self.currentX > self.bX) {
+                                    steerIndex = 2;
+                                    rightTurn = 0;
+                                } else if (self.currentX < self.bX) {
+                                    steerIndex = 2;
+                                    rightTurn = 1;
+                                } else if (self.currentX == self.bX) {
+                                    steerIndex = 0;
+                                    rightTurn = 1;
+                                }
+                                
+                                //if (self.currentY >= self.bY) stopCheck = 0;
+                                //NSLog(@"bY is: %f", self.bY);
+                                
+                            } else if (self.reverseBit == -1) {
+                                if (self.currentX > self.aX) {
+                                    steerIndex = 4;
+                                    rightTurn = 0;
+                                } else if (self.currentX < self.aX) {
+                                    steerIndex = 0;
+                                    rightTurn = 1;
+                                } else if (self.currentX == self.aX) {
+                                    steerIndex = 2;
+                                    rightTurn = 0;
+                                }
+                                
+                                //if (self.currentY <= self.aY) stopCheck = 0;
+                                //NSLog(@"aY is: %f", self.aY);
+                            }
+                            [self adjustedMoveWithSteeringIndex:steerIndex turnRight:rightTurn];
+                            
+                            if ((CACurrentMediaTime() - start) >= 2.0) {
+                                break;
+                            }
+                        }
+                        self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
                     }
+                } else {
+                    [self simpleMove];
                 }
-                [self moveCycle];
+                
                 self.reverseBit*=-1;
             }
             
