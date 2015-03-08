@@ -242,8 +242,8 @@
 				6E0E85CA1A212D73003057AB /* ViewController.m in Sources */,
 				6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */,
 				6E0E85C41A212D73003057AB /* main.m in Sources */,
-				849717721A8508A6001994A4 /* SoundArrayClientViewController.m in Sources */,
-				849717711A8508A6001994A4 /* SoundArrayClientAppDelegate.m in Sources */,
+				18A9F81A1A7F29A3009EF0A7 /* SoundArrayClientViewController.m in Sources */,
+				18A9F8191A7F29A3009EF0A7 /* SoundArrayClientAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
