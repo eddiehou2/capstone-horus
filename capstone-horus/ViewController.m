@@ -58,7 +58,7 @@ static NSMutableDictionary * microcarCommands = nil;
     self.reverseBit = 1;
     
     self.aX = 0.0f;
-    self.aY = 0.0f;
+    self.aY = 10.0f;
     self.bX = 0.0f;
     self.bY = 0.0f;
     self.currentX = 0.0f;
@@ -350,11 +350,17 @@ static NSMutableDictionary * microcarCommands = nil;
                 
                 [NSThread sleepForTimeInterval:6.0f];
                 
+                //Print out global destination positions
+                NSLog(@"aX is: %f", self.aX);
+                NSLog(@"aY is: %f", self.aY);
+                NSLog(@"bX is: %f", self.bX);
+                NSLog(@"bY is: %f", self.bY);
+                
                 if (self.soundArrayString != nil) {
                     if (i == 0) {
-                        NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                        self.aX = [components[1] floatValue];   //current position, xy
-                        self.aY = [components[2] floatValue];
+                        //NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
+                        //self.aX = [components[1] floatValue];   //The starting position is now hard-coded to (0, 10)
+                        //self.aY = [components[2] floatValue];
                         
                         [self simpleMove];
                         
@@ -363,7 +369,7 @@ static NSMutableDictionary * microcarCommands = nil;
                         //[self stop];
                     } else if (i == 1) {
                         NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
-                        self.bX = [components[1] floatValue];
+                        //self.bX = [components[1] floatValue];     //The end position is hardcoded to 0 on the x axis
                         self.bY = [components[2] floatValue];
                         
                         [self simpleMove];
@@ -464,8 +470,8 @@ static NSMutableDictionary * microcarCommands = nil;
                             [self adjustedMoveWithSteeringIndex:steerIndex turnRight:rightTurn];
                             
                             CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
-                            NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
-                            NSLog(@"NSDATE elapsedTime: %lf", elapsedTime);
+                            //NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+                            //NSLog(@"NSDATE elapsedTime: %lf", elapsedTime);
                             //if ([start timeIntervalSinceNow] >= 1.9) {
                             
                             NSMutableArray * components1 = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
@@ -478,18 +484,21 @@ static NSMutableDictionary * microcarCommands = nil;
                             float daX = fabs(self.currentX - self.aX);
                             float daY = fabs(self.currentY - self.aY);
                             
-                            if(self.reverseBit == 1  && self.currentX == self.bX && self.currentY == self.bY) break;
-                            if(self.reverseBit == -1 && self.currentX == self.aX && self.currentY == self.aY) break;
+                            
+                            //Break conditions
+                            if(self.reverseBit == 1  && self.currentY >= self.bY) break;
+                            if(self.reverseBit == -1 && self.currentY <= self.aY) break;
                             //if(self.reverseBit == 1  && (dbX > 0 && dbX <= 4) && (dbY > 0 && dbY <= 4)) break;  //tolerate errors within 4cm
                             //if(self.reverseBit == -1 && (daX > 0 && daX <= 4) && (daY > 0 && daY <= 4)) break;
                             
-                            if(elapsedTime >= 1.9)
+                            if(elapsedTime >= 5.0)
                                 break;
                             
                         } //while
                         self.sendIntermediate = [NSString stringWithFormat:@"%@ %@",microcarCommands[@"NO_SPEED"],microcarCommands[@"NO_STEER"]];
                     }
                 } else {
+                    NSLog(@"Homo erectus");
                     [self simpleMove];
                 }
                 
@@ -699,7 +708,7 @@ static NSMutableDictionary * microcarCommands = nil;
                         NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
                         
                         if (nil != output) {
-                            [self tLog:[NSString stringWithFormat:@"> %@", output]];    //prints out received messages
+                            //[self tLog:[NSString stringWithFormat:@"> %@", output]];    //prints out received messages
                             self.soundArrayString = output;
                             //NSLog(@"soundArrayString %@", self.soundArrayString);
                         }

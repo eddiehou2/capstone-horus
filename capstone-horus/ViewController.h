@@ -10,8 +10,8 @@
 @import ExternalAccessory;
 
 @interface ViewController : UIViewController
-@property (nonatomic, retain) IBOutlet UIButton *test;
-- (IBAction)teststeerAngle:(id)sender;
+//@property (nonatomic, retain) IBOutlet UIButton *test;
+//- (IBAction)teststeerAngle:(id)sender;
 
 //Sound Array Stuff
 @property (weak, nonatomic) IBOutlet UITextView *testTextView;
