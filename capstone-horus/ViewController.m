@@ -340,14 +340,16 @@ static NSMutableDictionary * microcarCommands = nil;
 
 -(void) helperThreadMain {
     while([[NSThread currentThread] isCancelled] == NO) {
+        
+        //Execute movement: The movementBit is triggered by a UIButton
         if (self.movementBit == 1) {
             self.sendIntermediate = microcarCommands[@"HORN_ON"];
             
             int cycles = 20;    //no of interations
             
             for (int i = 0; i < cycles; i++) {  //i is the iteration no.
-                int stopCheck = 1;
                 
+                //Sleep for six seconds to let the array detect position
                 [NSThread sleepForTimeInterval:6.0f];
                 
                 //Print out global destination positions
@@ -356,7 +358,11 @@ static NSMutableDictionary * microcarCommands = nil;
                 NSLog(@"bX is: %f", self.bX);
                 NSLog(@"bY is: %f", self.bY);
                 
+                
+                //If there is array data in soundArrayString, execute adjusted movement scripts. Otherwise, default simpleMove
                 if (self.soundArrayString != nil) {
+                    
+                    //On the first iteration, create a reference position that follows the car. Execute simpleMove.
                     if (i == 0) {
                         //NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
                         //self.aX = [components[1] floatValue];   //The starting position is now hard-coded to (0, 10)
@@ -367,6 +373,8 @@ static NSMutableDictionary * microcarCommands = nil;
                         //[NSThread sleepForTimeInterval:1.5f];
                         
                         //[self stop];
+                        
+                    //On the second iteration, save where the car stopped
                     } else if (i == 1) {
                         NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
                         //self.bX = [components[1] floatValue];     //The end position is hardcoded to 0 on the x axis
@@ -377,18 +385,26 @@ static NSMutableDictionary * microcarCommands = nil;
                         //[NSThread sleepForTimeInterval:1.5f];
                         
                         //[self stop];
+                        
+                    //From the third iteration on, the car begins to adjust it's movement
                     } else {
                         NSDate *start = [NSDate date];
                         CFTimeInterval startTime = CACurrentMediaTime();
-                        // perform some action
+                        
+                        //Start loop to continuously check position
                         while (1) {
+                            
+                            //Start default value for steering: no steer.
                             int steerIndex = 0;
                             int rightTurn = 1;
+                            
+                            //Extract data from sound array
                             NSMutableArray * components = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
                             NSLog(@"Components array - x:%@, y:%@\n", components[1], components[2]);
                             self.currentX = [components[1] floatValue];
                             self.currentY = [components[2] floatValue];
                             
+                            //If the car is moving forwards
                             if (self.reverseBit == 1) {
                                 if ((self.currentX - self.bX) > 0 && (self.currentX - self.bX) <= 4) {
                                     steerIndex = 0; rightTurn = 1;  //2,0, 0,1
@@ -427,7 +443,8 @@ static NSMutableDictionary * microcarCommands = nil;
                                 */
                                 //if (self.currentY >= self.bY) stopCheck = 0;
                                 //NSLog(@"bY is: %f", self.bY);
-                                
+                            
+                            //If the car is moving backwards
                             } else if (self.reverseBit == -1) {
                                 if ((self.currentX - self.aX) > 0 && (self.currentX - self.aX) <= 4) {
                                     steerIndex = 2; rightTurn = 0;  //0,0, 1,0 but move more to the left...
@@ -467,23 +484,27 @@ static NSMutableDictionary * microcarCommands = nil;
                                 //if (self.currentY <= self.aY) stopCheck = 0;
                                 //NSLog(@"aY is: %f", self.aY);
                             }
+                            
+                            //Call function, which affects steering only
                             [self adjustedMoveWithSteeringIndex:steerIndex turnRight:rightTurn];
                             
+                            //Calculate elapsed time
                             CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
                             //NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
                             //NSLog(@"NSDATE elapsedTime: %lf", elapsedTime);
                             //if ([start timeIntervalSinceNow] >= 1.9) {
                             
+                            //Extract sound array data AGAIN, for break conditions (see below)
                             NSMutableArray * components1 = [[self.soundArrayString componentsSeparatedByString:@" "] mutableCopy];
                             NSLog(@"Components array - x:%@, y:%@\n", components[1], components[2]);
                             self.currentX = [components1[1] floatValue];
                             self.currentY = [components1[2] floatValue];
                             
+                            //Calculate differences. Note: this is currently unused
                             float dbX = fabs(self.currentX - self.bX);
                             float dbY = fabs(self.currentY - self.bY);
                             float daX = fabs(self.currentX - self.aX);
                             float daY = fabs(self.currentY - self.aY);
-                            
                             
                             //Break conditions
                             if(self.reverseBit == 1  && self.currentY >= self.bY) break;
