@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @import ExternalAccessory;
+#import <CorePlot-CocoaTouch.h>
 
 @interface ViewController : UIViewController
 //@property (nonatomic, retain) IBOutlet UIButton *test;

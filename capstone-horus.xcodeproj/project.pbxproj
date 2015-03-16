@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180815CB1AB7257B00303832 /* WidthHeightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180815CA1AB7257B00303832 /* WidthHeightViewController.m */; };
+		180815D01AB7259E00303832 /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180815CF1AB7259E00303832 /* GridViewController.m */; };
+		180B69A81AB722EF00A4E14A /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 180B69A51AB7229900A4E14A /* libCorePlot-CocoaTouch.a */; };
+		180B69AA1AB7245C00A4E14A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180B69A91AB7245C00A4E14A /* QuartzCore.framework */; };
 		6E0E85C41A212D73003057AB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C31A212D73003057AB /* main.m */; };
 		6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C61A212D73003057AB /* AppDelegate.m */; };
 		6E0E85CA1A212D73003057AB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E85C91A212D73003057AB /* ViewController.m */; };
@@ -19,6 +23,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		180B69A41AB7229900A4E14A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 180B699E1AB7229900A4E14A /* CorePlot-CocoaTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BC9B83470FB8A0A40035D8DA;
+			remoteInfo = "CorePlot-CocoaTouch";
+		};
+		180B69A61AB722D400A4E14A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 180B699E1AB7229900A4E14A /* CorePlot-CocoaTouch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BC9B83460FB8A0A40035D8DA;
+			remoteInfo = "CorePlot-CocoaTouch";
+		};
 		6E0E85D81A212D74003057AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6E0E85B61A212D73003057AB /* Project object */;
@@ -29,6 +47,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		180815C91AB7257B00303832 /* WidthHeightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidthHeightViewController.h; sourceTree = "<group>"; };
+		180815CA1AB7257B00303832 /* WidthHeightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidthHeightViewController.m; sourceTree = "<group>"; };
+		180815CE1AB7259E00303832 /* GridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
+		180815CF1AB7259E00303832 /* GridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridViewController.m; sourceTree = "<group>"; };
+		180B699E1AB7229900A4E14A /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "ExternalLibraries/CorePlot_1.4/Source/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
+		180B69A91AB7245C00A4E14A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6E0E85BE1A212D73003057AB /* capstone-horus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "capstone-horus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E85C21A212D73003057AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E0E85C31A212D73003057AB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -53,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180B69AA1AB7245C00A4E14A /* QuartzCore.framework in Frameworks */,
+				180B69A81AB722EF00A4E14A /* libCorePlot-CocoaTouch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,9 +92,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180B699D1AB721E200A4E14A /* ExternalLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				180B699E1AB7229900A4E14A /* CorePlot-CocoaTouch.xcodeproj */,
+			);
+			name = ExternalLibraries;
+			sourceTree = "<group>";
+		};
+		180B699F1AB7229900A4E14A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				180B69A51AB7229900A4E14A /* libCorePlot-CocoaTouch.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		6E0E85B51A212D73003057AB = {
 			isa = PBXGroup;
 			children = (
+				180B69A91AB7245C00A4E14A /* QuartzCore.framework */,
 				6E0E85C01A212D73003057AB /* capstone-horus */,
 				6E0E85DA1A212D74003057AB /* capstone-horusTests */,
 				6E0E85BF1A212D73003057AB /* Products */,
@@ -91,6 +134,10 @@
 				6E0E85C61A212D73003057AB /* AppDelegate.m */,
 				6E0E85C81A212D73003057AB /* ViewController.h */,
 				6E0E85C91A212D73003057AB /* ViewController.m */,
+				180815C91AB7257B00303832 /* WidthHeightViewController.h */,
+				180815CA1AB7257B00303832 /* WidthHeightViewController.m */,
+				180815CE1AB7259E00303832 /* GridViewController.h */,
+				180815CF1AB7259E00303832 /* GridViewController.m */,
 				84A097CB1AACA04C0099F43A /* SoundArrayClientAppDelegate.h */,
 				84A097CC1AACA04C0099F43A /* SoundArrayClientAppDelegate.m */,
 				84A097CD1AACA04C0099F43A /* SoundArrayClientViewController.h */,
@@ -98,6 +145,7 @@
 				6E0E85CB1A212D73003057AB /* Main.storyboard */,
 				6E0E85CE1A212D73003057AB /* Images.xcassets */,
 				6E0E85D01A212D73003057AB /* LaunchScreen.xib */,
+				180B699D1AB721E200A4E14A /* ExternalLibraries */,
 				6E0E85C11A212D73003057AB /* Supporting Files */,
 			);
 			path = "capstone-horus";
@@ -143,6 +191,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				180B69A71AB722D400A4E14A /* PBXTargetDependency */,
 			);
 			name = "capstone-horus";
 			productName = "capstone-horus";
@@ -196,6 +245,12 @@
 			mainGroup = 6E0E85B51A212D73003057AB;
 			productRefGroup = 6E0E85BF1A212D73003057AB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 180B699F1AB7229900A4E14A /* Products */;
+					ProjectRef = 180B699E1AB7229900A4E14A /* CorePlot-CocoaTouch.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				6E0E85BD1A212D73003057AB /* capstone-horus */,
@@ -203,6 +258,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		180B69A51AB7229900A4E14A /* libCorePlot-CocoaTouch.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libCorePlot-CocoaTouch.a";
+			remoteRef = 180B69A41AB7229900A4E14A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6E0E85BC1A212D73003057AB /* Resources */ = {
@@ -232,7 +297,9 @@
 				6E0E85CA1A212D73003057AB /* ViewController.m in Sources */,
 				6E0E85C71A212D73003057AB /* AppDelegate.m in Sources */,
 				84A097D01AACA04C0099F43A /* SoundArrayClientViewController.m in Sources */,
+				180815D01AB7259E00303832 /* GridViewController.m in Sources */,
 				6E0E85C41A212D73003057AB /* main.m in Sources */,
+				180815CB1AB7257B00303832 /* WidthHeightViewController.m in Sources */,
 				84A097CF1AACA04C0099F43A /* SoundArrayClientAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,6 +315,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		180B69A71AB722D400A4E14A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CorePlot-CocoaTouch";
+			targetProxy = 180B69A61AB722D400A4E14A /* PBXContainerItemProxy */;
+		};
 		6E0E85D91A212D74003057AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6E0E85BD1A212D73003057AB /* capstone-horus */;
@@ -278,7 +350,7 @@
 		6E0E85DF1A212D74003057AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -309,9 +381,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${PROJECT_DIR}/capstone-horus/ExternalLibraries/CorePlot_1.4/Source/framework/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -319,7 +397,7 @@
 		6E0E85E01A212D74003057AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -344,8 +422,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${PROJECT_DIR}/capstone-horus/ExternalLibraries/CorePlot_1.4/Source/framework/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -355,8 +439,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${PROJECT_DIR}/capstone-horus/ExternalLibraries/CorePlot_1.4/Source/framework/**",
+				);
 				INFOPLIST_FILE = "capstone-horus/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -365,8 +455,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${PROJECT_DIR}/capstone-horus/ExternalLibraries/CorePlot_1.4/Source/framework/**",
+				);
 				INFOPLIST_FILE = "capstone-horus/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
